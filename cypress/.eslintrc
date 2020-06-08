@@ -1,0 +1,22 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["simple-import-sort", "eslint-plugin-cypress"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "eslint-config-prettier",
+    "plugin:cypress/recommended"
+  ],
+  "rules": {
+    "strict": ["error", "never"],
+    "simple-import-sort/sort": "error",
+    "no-unused-vars": "off"
+  },
+  "env": {"cypress/globals": true}
+}

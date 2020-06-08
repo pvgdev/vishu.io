@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+    "pre-commit": "npm run check-types && lint-staged && npm run test:e2e:run && npm run build"
+  }
+}

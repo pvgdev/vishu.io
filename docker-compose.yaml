@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./dev.Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      # Add non-network local connections to access control list
+      # xhost +local:$(id -un)
+      - DISPLAY
+      - DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+      - vishu.io-bashhistory:/home/node/commandhistory
+      - vscode-extensions-volume:/home/node/.vscode-server/extensions
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/bus:/run/user/1000/bus
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+volumes:
+  vishu.io-bashhistory:
+  vscode-extensions-volume:
