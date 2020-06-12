@@ -1,4 +1,4 @@
-FROM node:14.3.0-alpine
+FROM node:14.2.0-buster-slim
 
 RUN mkdir /home/node/app
 
