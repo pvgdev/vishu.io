@@ -23,6 +23,7 @@
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
     "editor.rulers": [80],
+    "editor.tabSize": 2,
     "workbench.colorCustomizations": {
       "editorRuler.foreground": "#ff4081"
     },
@@ -31,6 +32,8 @@
       "source.fixAll.eslint": true
     },
     "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Night Owl",
+    "window.titleBarStyle": "custom",
     "terminal.integrated.shell.linux": "/bin/zsh"
   },
 
@@ -39,7 +42,10 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "dsznajder.es7-react-js-snippets",
-    "andys8.jest-snippets"
+    "andys8.jest-snippets",
+    "jpoissonnier.vscode-styled-components",
+    "naumovs.color-highlight",
+    "sdras.night-owl"
   ]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
