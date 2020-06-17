@@ -1,3 +1,4 @@
+import {Footer} from './Footer'
 import {HomeLayout} from './HomeLayout'
 
-export {HomeLayout}
+export {Footer, HomeLayout}

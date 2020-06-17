@@ -58,6 +58,46 @@ export const Posts: React.FC = () => {
         <PostCard.Date>August, 18</PostCard.Date>
         <PostCard.Title>Animating Link Underlines</PostCard.Title>
       </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>
+          Animating Link Underlines Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Numquam facere corporis consequuntur non ex fugiat
+          aliquam laboriosam molestiae a totam, id quia culpa molestias vero
+          officiis nostrum impedit similique pariatur?
+        </PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
+      <PostCard>
+        <PostCard.Tags tags={['css', 'js']}></PostCard.Tags>
+        <PostCard.Date>August, 18</PostCard.Date>
+        <PostCard.Title>Animating Link Underlines</PostCard.Title>
+      </PostCard>
     </Container>
   )
 }
