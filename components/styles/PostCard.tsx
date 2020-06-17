@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+  width: 100%;
+  margin: 1rem;
   padding: 1rem;
-  border: 1px solid rgba(105, 111, 116, 0.5);
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -15,11 +16,9 @@ export const Tag = styled.span`
 `
 
 export const Date = styled.div`
-  color: rgba(105, 111, 116, 0.5);
+  color: rgba(112, 117, 125, 1);
 `
 
 export const Title = styled.div`
-  padding: 4rem;
   font-size: 2rem;
-  text-align: center;
 `

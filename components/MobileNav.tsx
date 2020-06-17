@@ -1,19 +1,17 @@
 import Link from 'next/link'
-import React, {useState} from 'react'
+import React from 'react'
 
-import {MobileNav} from './MobileNav'
-import {NavBar} from './NavBar'
-import {Container, Menu, StyledLink} from './styles/Nav'
+import {Container, Menu, StyledLink} from './styles/MobileNav'
 
-interface INav {
+interface IMobileNav {
   Menu: React.FC
 }
 
-export const Nav: React.FC & INav = ({children}) => {
+export const MobileNav: React.FC & IMobileNav = ({children}) => {
   return <Container>{children}</Container>
 }
 
-Nav.Menu = () => {
+MobileNav.Menu = () => {
   return (
     <Menu>
       <Link href="/" passHref>
@@ -35,4 +33,4 @@ Nav.Menu = () => {
   )
 }
 
-Nav.Menu.displayName = 'Nav.Menu'
+MobileNav.Menu.displayName = 'Mobile.Menu'

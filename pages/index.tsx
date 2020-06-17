@@ -1,6 +1,11 @@
-import {HomeLayout} from '@components'
+import {Footer, HomeLayout} from '@components'
 import React, {ReactElement} from 'react'
 
 export default function index(): ReactElement {
-  return <HomeLayout></HomeLayout>
+  return (
+    <>
+      <HomeLayout></HomeLayout>
+      <Footer></Footer>
+    </>
+  )
 }

@@ -2,8 +2,8 @@ import React from 'react'
 
 import {Avatar} from './Avatar'
 import {Description} from './Description'
-import {Footer} from './Footer'
 import {Nav} from './Nav'
+import {NavBar} from './NavBar'
 import {Posts} from './Posts'
 import {Container} from './styles/HomeLayout'
 
@@ -22,8 +22,8 @@ export const HomeLayout: React.FC = () => {
       <Nav>
         <Nav.Menu></Nav.Menu>
       </Nav>
+      <NavBar></NavBar>
       <Posts></Posts>
-      <Footer></Footer>
     </Container>
   )
 }

@@ -30,7 +30,6 @@ PostCard.Tags = ({tags}) => {
     react: 'rgba(97, 218, 251, 1)',
     redux: 'rgba(89, 61, 136, 1)',
   }
-  console.log(tags)
   return (
     <div>
       {tags.map(tag => (
