@@ -13,7 +13,9 @@ export const StyledLink = styled.a`
   padding-left: 1rem;
   color: black;
   text-decoration: none;
-  background-color: rgba(0, 128, 255, 1);
+  /* background-color: rgba(0, 128, 255, 1); */
+  background-color: rgba(255, 75, 168, 1);
+
   text-align: left;
 `
 

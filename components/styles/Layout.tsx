@@ -5,17 +5,17 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns:
     [footer-start] 100px
-    [avatar-start posts-start]1fr
+    [avatar-start content-start]1fr
     [avatar-end description-start] 3fr
     [description-end navigation-start] 100px
-    [navigation-end posts-end] 100px
+    [navigation-end content-end] 100px
     [footer-end];
   grid-template-rows:
     50px
     [avatar-start description-start navigation-start] 2fr
     [avatar-end description-end navigation-end] 30px
-    [posts-start] auto
-    [posts-end] 1fr
+    [content-start] auto
+    [content-end] 1fr
     [footer-start] 4rem
     [footer-end];
   grid-gap: 0px; */
@@ -26,36 +26,31 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns:
     [navbar-start footer-start] 2rem
-    [avatar-start posts-start] 150px
+    [avatar-start content-start] 150px
     [avatar-end] 2rem
     [description-start] 1fr
-    [description-end posts-end] 2rem
+    [description-end content-end] 2rem
     [footer-end navbar-end];
   grid-template-rows:
     [navbar-start] 3rem
     [navbar-end] 1rem
-    [avatar-start description-start] 1fr
+    [avatar-start description-start] auto
     [avatar-end description-end] 5rem
-    [posts-start] auto
-    [posts-end] 1rem
-    [footer-start] 5rem
-    [footer-end];
+    [content-start] 1fr
+    [content-end] 1rem;
 
   @media only screen and (min-width: 600px) {
     grid-template-columns:
-      [footer-start] 2rem
-      [avatar-start posts-start] 200px
+      2rem
+      [avatar-start content-start] 200px
       [avatar-end] 3rem
       [description-start] 2fr
-      [description-end nav-start] auto [posts-end nav-end] 2rem
-      [footer-end];
+      [description-end nav-start] auto [content-end nav-end] 2rem;
     grid-template-rows:
       3rem
-      [avatar-start description-start nav-start] 1fr
+      [avatar-start description-start nav-start] auto
       [avatar-end description-end nav-end] 5rem
-      [posts-start] auto
-      [posts-end] 1rem
-      [footer-start] 5rem
-      [footer-end];
+      [content-start] 1fr
+      [content-end] 1rem;
   }
 `
