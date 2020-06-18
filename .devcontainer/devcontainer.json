@@ -45,7 +45,8 @@
     "andys8.jest-snippets",
     "jpoissonnier.vscode-styled-components",
     "naumovs.color-highlight",
-    "sdras.night-owl"
+    "sdras.night-owl",
+    "silvenon.mdx"
   ]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

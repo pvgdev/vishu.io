@@ -1,4 +1,7 @@
+import {CodeBlock} from './CodeBlock'
 import {Footer} from './Footer'
-import {HomeLayout} from './HomeLayout'
+import {Layout} from './Layout'
+import {PostCard} from './PostCard'
+import {Posts} from './Posts'
 
-export {Footer, HomeLayout}
+export {CodeBlock, Footer, Layout, PostCard, Posts}

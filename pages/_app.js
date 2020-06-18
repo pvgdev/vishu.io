@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import './styles.css'
 
 import React from 'react'
@@ -23,10 +24,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: courier-prime, monospace;
     font-size: 1.6rem;
+    line-height: 1.75;
     background-color: ${props => props.theme.colors.main};
     color: ${props => props.theme.colors.secondary}
   }
 
+  .content {
+    grid-area: content;
+  }
 `
 
 // import App from 'next/app'
@@ -35,7 +40,7 @@ function MyApp({Component, pageProps}) {
     <>
       <ThemeProvider theme={dark}>
         <GlobalStyle theme={dark} />
-        <Component {...pageProps} />
+        <Component {...pageProps}> </Component>
       </ThemeProvider>
     </>
   )
