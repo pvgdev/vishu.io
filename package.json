@@ -77,8 +77,7 @@
     "prettier": "^2.0.5",
     "react-testing-library": "^8.0.1",
     "start-server-and-test": "^1.11.0",
-    "typescript": "^3.9.5",
-    "webpack": "^4.43.0"
+    "typescript": "^3.9.5"
   },
   "config": {
     "commitizen": {
@@ -88,7 +87,6 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.5",
     "@next/mdx": "^9.4.4",
-    "gray-matter": "^4.0.2",
     "image-trace-loader": "^1.0.2",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
