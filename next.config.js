@@ -36,6 +36,8 @@ module.exports = withPlugins(
       //   ],
       // })
 
+      config.target = 'node'
+
       if (!isServer) {
         config.node = {
           fs: 'empty',
