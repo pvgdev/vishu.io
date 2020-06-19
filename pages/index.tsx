@@ -1,5 +1,5 @@
 import {Layout, PostCard, Posts} from '@components'
-import fs from 'fs/promises'
+import fs from 'fs'
 import {GetStaticProps} from 'next'
 import Link from 'next/link'
 import {extname, join, relative, resolve} from 'path'
@@ -39,8 +39,9 @@ export const index: React.FC<Props> = ({posts}) => {
 export const getStaticProps: GetStaticProps = async () => {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
+  const fsPromises = fs.promises
   async function* getFiles(dir) {
-    const dirents = await fs.readdir(dir, {
+    const dirents = await fsPromises.readdir(dir, {
       withFileTypes: true,
     })
 
@@ -61,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
       const relativePath = relative(rootDir, f)
       const {metadata} = await import('../content/' + relativePath)
       metadata.urlPath = '/' + relativePath.split('.').slice(0, -1).join('.')
-      console.log(metadata.urlPath)
+      // console.log(metadata.urlPath)
       meta.push(metadata)
     }
     return meta

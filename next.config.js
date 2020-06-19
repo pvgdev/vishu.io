@@ -36,16 +36,6 @@ module.exports = withPlugins(
       //   ],
       // })
 
-      config.target = 'node'
-
-      if (!isServer) {
-        config.node = {
-          fs: 'empty',
-          'fs/promise': 'empty',
-          path: 'empty',
-        }
-      }
-
       return config
     },
     webpackDevMiddleware: config => {
