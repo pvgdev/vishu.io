@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
 import './styles.css'
 
+import {Footer} from '@components'
 import React from 'react'
 import {createGlobalStyle, ThemeProvider} from 'styled-components'
 
-import {dark} from '../themes'
+import {light} from '../themes'
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -25,8 +26,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: courier-prime, monospace;
     font-size: 1.6rem;
     line-height: 1.75;
-    background-color: ${props => props.theme.colors.main};
-    color: ${props => props.theme.colors.secondary}
+    background-color: ${props => props.theme.backgroundColor};
+    color: ${props => props.theme.color}
   }
 
   .content {
@@ -38,9 +39,10 @@ const GlobalStyle = createGlobalStyle`
 function MyApp({Component, pageProps}) {
   return (
     <>
-      <ThemeProvider theme={dark}>
-        <GlobalStyle theme={dark} />
+      <ThemeProvider theme={light}>
+        <GlobalStyle theme={light} />
         <Component {...pageProps}> </Component>
+        <Footer></Footer>
       </ThemeProvider>
     </>
   )

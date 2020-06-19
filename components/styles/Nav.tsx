@@ -16,17 +16,17 @@ export const Menu = styled.div`
 `
 
 export const StyledLink = styled.a`
-  color: white;
+  color: ${props => props.theme.color};
   text-decoration: none;
   text-align: right;
 
   :hover {
-    color: ${props => props.theme.colors.main};
-    background-color: #fff;
+    color: ${props => props.theme.backgroundColor};
+    background-color: ${props => props.theme.color};
   }
 
   :active {
-    color: ${props => props.theme.colors.main};
-    background-color: #fff;
+    color: ${props => props.theme.backgroundColor};
+    background-color: ${props => props.theme.color};
   }
 `

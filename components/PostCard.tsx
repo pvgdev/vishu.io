@@ -25,7 +25,7 @@ PostCard.Date.displayName = 'PostCard.Date'
 PostCard.Tags = ({tags}) => {
   const tagColors = {
     css: 'orange',
-    js: 'yellow',
+    js: 'rgba(247, 223, 30, 1)',
     html: 'rgba(78, 110, 138, 1)',
     react: 'rgba(97, 218, 251, 1)',
     redux: 'rgba(89, 61, 136, 1)',

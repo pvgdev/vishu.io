@@ -20,7 +20,7 @@ MobileNav.Menu = () => {
       <Link href="/" passHref>
         <StyledLink>Tags</StyledLink>
       </Link>
-      <Link href="/" passHref>
+      <Link href="/skills" passHref>
         <StyledLink>Skills</StyledLink>
       </Link>
       <Link href="/" passHref>

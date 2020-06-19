@@ -11,7 +11,11 @@ export const Container = styled.div`
 `
 
 export const Tag = styled.span`
+  padding: 2px 4px;
+  font-weight: bold;
   color: ${props => props.color};
+  background-color: ${props => props.theme.color};
+  /* border: 1px solid ${props => props.theme.color}; */
   margin-right: 1rem;
 `
 

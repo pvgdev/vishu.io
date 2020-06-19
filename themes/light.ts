@@ -1,12 +1,8 @@
 import {DefaultTheme} from 'styled-components'
 
 const lightTheme: DefaultTheme = {
-  borderRadius: '5px',
-
-  colors: {
-    main: 'cyan',
-    secondary: 'magenta',
-  },
+  backgroundColor: 'white',
+  color: 'black',
 }
 
 export {lightTheme}

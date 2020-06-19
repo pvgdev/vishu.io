@@ -2,10 +2,13 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   grid-area: navbar;
-  text-align: right;
 
-  /* background-color: rgba(26, 26, 27, 1); */
-  background-color: rgba(36, 21, 50, 1);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: ${props => props.theme.color};
+
   @media only screen and (min-width: 600px) {
     display: none;
   }
@@ -13,12 +16,9 @@ export const Container = styled.div`
 
 export const MenuButton = styled.button`
   font-size: 2rem;
-  height: 100%;
-  padding: 2px;
-  border-radius: 0px;
-  border: 0px;
-  /* background-color: rgba(0, 128, 255, 1); */
-  background-color: rgba(255, 75, 168, 1);
-
-  outline: 0px;
+  margin: 5px;
+  padding: 5px;
+  background-color: ${props => props.theme.color};
+  color: ${props => props.theme.backgroundColor};
+  border: 1px solid ${props => props.theme.backgroundColor};
 `

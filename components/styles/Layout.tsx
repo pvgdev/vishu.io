@@ -25,19 +25,19 @@ export const Container = styled.div`
   max-width: 800px;
   display: grid;
   grid-template-columns:
-    [navbar-start footer-start] 2rem
+    [navbar-start] 2rem
     [avatar-start content-start] 150px
     [avatar-end] 2rem
     [description-start] 1fr
     [description-end content-end] 2rem
-    [footer-end navbar-end];
+    [navbar-end];
   grid-template-rows:
-    [navbar-start] 3rem
+    [navbar-start] 5rem
     [navbar-end] 1rem
     [avatar-start description-start] auto
     [avatar-end description-end] 5rem
     [content-start] 1fr
-    [content-end] 1rem;
+    [content-end];
 
   @media only screen and (min-width: 600px) {
     grid-template-columns:
@@ -51,6 +51,6 @@ export const Container = styled.div`
       [avatar-start description-start nav-start] auto
       [avatar-end description-end nav-end] 5rem
       [content-start] 1fr
-      [content-end] 1rem;
+      [content-end];
   }
 `
