@@ -1,40 +1,30 @@
 import React from 'react'
 
-import {Container, Image} from './styles/SkillCard'
-
-interface ImageProps {
-  height?: string
-  width?: string
-  color?: string
-  src: string
-}
+import {Container, Title} from './styles/SkillCard'
 
 interface SkillCardProps {
-  color: string
+  color?: string
+  backgroundColor?: string
 }
 
 interface ISkillCard {
-  Image: React.FC<ImageProps>
+  Title: React.FC
 }
 
 export const SkillCard: React.FC<SkillCardProps> & ISkillCard = ({
   children,
-  color,
-}) => {
-  return <Container color={color}>{children}</Container>
-}
-
-SkillCard.Image = ({
-  height = '150px',
-  width = '250px',
-  color = 'white',
-  src,
+  color = '#fff',
+  backgroundColor = '#000',
 }) => {
   return (
-    <>
-      <Image height={height} width={width} color={color} src={src}></Image>
-    </>
+    <Container color={color} backgroundColor={backgroundColor}>
+      {children}
+    </Container>
   )
 }
 
-SkillCard.Image.displayName = 'SkillCard.Image'
+SkillCard.Title = ({children}) => {
+  return <Title>{children}</Title>
+}
+
+SkillCard.Title.displayName = 'SkillCard.Title'

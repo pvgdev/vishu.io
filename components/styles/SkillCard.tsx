@@ -1,13 +1,20 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
-  padding: 0rem 1rem;
-  height: 100px;
-  width: 100px;
-  background-color: ${props => props.color};
+interface SkillCardProps {
+  color?: string
+  backgroundColor?: string
+}
+
+export const Container = styled.span<SkillCardProps>`
+  padding: 15px;
+  color: ${props => props.color};
+  background-color: ${props => props.backgroundColor};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
 
-export const Image = styled.img``
+export const Title = styled.p`
+  margin-top: 5px;
+`

@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import {Avatar} from './Avatar'
 import {CodeBlock} from './CodeBlock'
 import {Description} from './Description'
-import {Footer} from './Footer'
 import {Nav} from './Nav'
 import {NavBar} from './NavBar'
 import {Container} from './styles/Layout'
@@ -32,7 +31,10 @@ const components = {
     color: wheat;
   `,
   em: styled.b``,
-  h1: styled.h1``,
+  h1: styled.h1`
+    font-size: 3rem;
+    line-height: 3rem;
+  `,
   h2: styled.h2``,
   h3: styled.h3``,
   h4: styled.h4``,
