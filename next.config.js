@@ -39,6 +39,8 @@ module.exports = withPlugins(
       if (!isServer) {
         config.node = {
           fs: 'empty',
+          'fs/promise': 'empty',
+          path: 'empty',
         }
       }
 
