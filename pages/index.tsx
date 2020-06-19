@@ -1,5 +1,5 @@
 import {Layout, PostCard, Posts} from '@components'
-import {readdir} from 'fs/promises'
+import fs from 'fs/promises'
 import {GetStaticProps} from 'next'
 import Link from 'next/link'
 import {extname, join, relative, resolve} from 'path'
@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   async function* getFiles(dir) {
-    const dirents = await readdir(dir, {
+    const dirents = await fs.readdir(dir, {
       withFileTypes: true,
     })
 
