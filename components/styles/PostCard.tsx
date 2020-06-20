@@ -25,4 +25,5 @@ export const Date = styled.div`
 
 export const Title = styled.div`
   font-size: 2rem;
+  font-weight: bold;
 `

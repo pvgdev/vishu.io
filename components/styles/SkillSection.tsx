@@ -5,6 +5,7 @@ export const Container = styled.div``
 export const Title = styled.h2`
   padding: 0px;
   border-bottom: 3px solid ${props => props.theme.color};
+  font-family: merriweather, serif;
 `
 
 export const Grid = styled.div`

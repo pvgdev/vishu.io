@@ -1,7 +1,9 @@
+import {Github, Twitter} from '@icons-pack/react-simple-icons'
 import {MDXProvider} from '@mdx-js/react'
 import Head from 'next/head'
-import React from 'react'
-import styled from 'styled-components'
+import Router from 'next/router'
+import React, {useState} from 'react'
+import styled, {css} from 'styled-components'
 
 import {Avatar} from './Avatar'
 import {CodeBlock} from './CodeBlock'
@@ -32,10 +34,11 @@ const components = {
   `,
   em: styled.b``,
   h1: styled.h1`
-    font-size: 3rem;
-    line-height: 3rem;
+    font-family: merriweather, serif;
   `,
-  h2: styled.h2``,
+  h2: styled.h2`
+    font-family: merriweather, serif;
+  `,
   h3: styled.h3``,
   h4: styled.h4``,
   h5: styled.h5``,
@@ -70,6 +73,19 @@ const components = {
 }
 
 export const Layout: React.FC<Props> = ({children, title}) => {
+  const [loading, setLoading] = useState(false)
+  Router.events.on('routeChangeStart', () => {
+    setLoading(true)
+  })
+
+  Router.events.on('routeChangeComplete', () => {
+    setLoading(false)
+  })
+
+  Router.events.on('routeChangeError', () => {
+    setLoading(false)
+  })
+
   return (
     <Container>
       <Head>
@@ -82,18 +98,34 @@ export const Layout: React.FC<Props> = ({children, title}) => {
       <Avatar></Avatar>
       <Description>
         <Description.Title>
-          <span>
-            Vishal <br /> Goud
-          </span>
+          <span>Vishal Goud</span>
         </Description.Title>
-        <Description.Caption>Front-end Developer</Description.Caption>
+        <div>
+          <Description.Button color="#fff" backgroundColor="#000">
+            <Github color="#fff" size={20} />
+            <span>Github</span>
+          </Description.Button>
+          <Description.Button
+            color="#fff"
+            backgroundColor="rgba(29, 161, 242, 1)"
+          >
+            <Twitter color="#fff" size={20} />
+            <span>Twitter</span>
+          </Description.Button>
+        </div>
+
+        <Description.Caption>Full Stack Developer</Description.Caption>
       </Description>
       <Nav>
         <Nav.Menu></Nav.Menu>
       </Nav>
       <NavBar></NavBar>
+
       <div className="content">
-        <MDXProvider components={components}>{children}</MDXProvider>
+        <MDXProvider components={components}>
+          {loading && <div className="content">Loading...</div>}
+          {!loading && children}
+        </MDXProvider>
       </div>
     </Container>
   )
