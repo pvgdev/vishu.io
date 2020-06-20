@@ -19,17 +19,51 @@ interface Props {
 
 export const index: React.FC<Props> = ({posts}) => {
   return (
-    <Layout title="Home | vishu.io">
+    <Layout title="Home | vishu.io" navTitle="Home">
       <Posts>
         {posts.map(post => (
-          <PostCard key={post.urlPath}>
-            <PostCard.Tags tags={post.tags}></PostCard.Tags>
-            <PostCard.Date>{post.date}</PostCard.Date>
-            <PostCard.Title>{post.title}</PostCard.Title>
-            <Link href={post.urlPath} passHref>
-              <a>Read more...</a>
-            </Link>
-          </PostCard>
+          <>
+            <PostCard key={post.urlPath}>
+              <PostCard.Tags tags={post.tags}></PostCard.Tags>
+              <PostCard.Date>{post.date}</PostCard.Date>
+              <PostCard.Title>{post.title}</PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>Read more...</a>
+              </Link>
+            </PostCard>
+            <PostCard key={post.urlPath}>
+              <PostCard.Tags tags={post.tags}></PostCard.Tags>
+              <PostCard.Date>{post.date}</PostCard.Date>
+              <PostCard.Title>{post.title}</PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>Read more...</a>
+              </Link>
+            </PostCard>
+            <PostCard key={post.urlPath}>
+              <PostCard.Tags tags={post.tags}></PostCard.Tags>
+              <PostCard.Date>{post.date}</PostCard.Date>
+              <PostCard.Title>{post.title}</PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>Read more...</a>
+              </Link>
+            </PostCard>
+            <PostCard key={post.urlPath}>
+              <PostCard.Tags tags={post.tags}></PostCard.Tags>
+              <PostCard.Date>{post.date}</PostCard.Date>
+              <PostCard.Title>{post.title}</PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>Read more...</a>
+              </Link>
+            </PostCard>
+            <PostCard key={post.urlPath}>
+              <PostCard.Tags tags={post.tags}></PostCard.Tags>
+              <PostCard.Date>{post.date}</PostCard.Date>
+              <PostCard.Title>{post.title}</PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>Read more...</a>
+              </Link>
+            </PostCard>
+          </>
         ))}
       </Posts>
     </Layout>

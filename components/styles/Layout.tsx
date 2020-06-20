@@ -25,12 +25,12 @@ export const Container = styled.div`
   max-width: 800px;
   display: grid;
   grid-template-columns:
-    [navbar-start] 2rem
-    [avatar-start content-start] 150px
+    [navbar-start content-start] 1rem
+    [avatar-start] 150px
     [avatar-end] 2rem
     [description-start] 1fr
-    [description-end content-end] 2rem
-    [navbar-end];
+    [description-end ] 2rem
+    [navbar-end content-end];
   grid-template-rows:
     [navbar-start] 5rem
     [navbar-end] 1rem
@@ -41,11 +41,10 @@ export const Container = styled.div`
 
   @media only screen and (min-width: 600px) {
     grid-template-columns:
-      2rem
       [avatar-start content-start] 200px
       [avatar-end] 3rem
       [description-start] 2fr
-      [description-end nav-start] auto [content-end nav-end] 2rem;
+      [description-end nav-start] auto [content-end nav-end];
     grid-template-rows:
       3rem
       [avatar-start description-start nav-start] auto

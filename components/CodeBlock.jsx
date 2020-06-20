@@ -18,9 +18,9 @@ export const CodeBlock = props => {
           className={className}
           style={{
             ...style,
-            padding: '20px',
-            overflow: 'auto',
-            borderRadius: '10px',
+            maxWidth: '100vw',
+            overflow: 'scroll',
+            padding: '10px',
             fontFamily: 'courier-prime-code',
           }}
         >

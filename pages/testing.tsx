@@ -6,7 +6,7 @@ const {title} = metadata
 
 export const index: React.FC = () => {
   return (
-    <Layout title={title}>
+    <Layout title={title} navTitle="Post">
       <MDXDocument></MDXDocument>
     </Layout>
   )

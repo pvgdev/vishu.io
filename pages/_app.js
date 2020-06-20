@@ -22,12 +22,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    max-width: 100vw;
     box-sizing: border-box;
     font-family: courier-prime, monospace;
     font-size: 1.6rem;
-    line-height: 1.75;
+    line-height: 1.5;
     background-color: ${props => props.theme.backgroundColor};
-    color: ${props => props.theme.color}
+    color: ${props => props.theme.color};
+
   }
 
   .content {
@@ -41,6 +43,7 @@ function MyApp({Component, pageProps}) {
     <>
       <ThemeProvider theme={light}>
         <GlobalStyle theme={light} />
+
         <Component {...pageProps}> </Component>
         <Footer></Footer>
       </ThemeProvider>

@@ -1,3 +1,7 @@
+@import '~sanitize.css';
+@import '~sanitize.css/forms.css';
+@import '~sanitize.css/typography.css';
+
 @import url('https://use.typekit.net/ofk3gku.css');
 @import url('../fonts/courier-code/stylesheet.css');
 @import url('https://use.typekit.net/ofk3gku.css');
