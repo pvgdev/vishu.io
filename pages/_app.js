@@ -34,6 +34,12 @@ const GlobalStyle = createGlobalStyle`
 
   .content {
     grid-area: content;
+    > div > * {
+      margin: 0 1rem;
+    }
+    > div > pre {
+      margin: 1rem 0px;
+    }
   }
 `
 

@@ -3,7 +3,7 @@ import React from 'react'
 
 export const index: React.FC = () => {
   return (
-    <Layout title="Skills | vishu.io" navTitle="Home">
+    <Layout title="Skills | vishu.io">
       <Skills></Skills>
     </Layout>
   )

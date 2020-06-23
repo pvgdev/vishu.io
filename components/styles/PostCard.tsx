@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Tag = styled.span`
   padding: 2px 4px;
   font-weight: bold;
-  color: ${props => props.color};
+  color: ${props => (props.color ? props.color : 'white')};
   background-color: ${props => props.theme.color};
   /* border: 1px solid ${props => props.theme.color}; */
   margin-right: 1rem;
@@ -23,7 +23,8 @@ export const Date = styled.div`
   color: rgba(112, 117, 125, 1);
 `
 
-export const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
+export const Title = styled.h2`
+  font-family: merriweather, serif;
 `
+
+export const Description = styled.p``

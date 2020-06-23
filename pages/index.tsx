@@ -9,6 +9,7 @@ interface Post {
   author: string
   date: string
   title: string
+  description: string
   tags: string[]
   urlPath: string
 }
@@ -19,51 +20,18 @@ interface Props {
 
 export const index: React.FC<Props> = ({posts}) => {
   return (
-    <Layout title="Home | vishu.io" navTitle="Home">
+    <Layout title="Home | vishu.io">
       <Posts>
         {posts.map(post => (
-          <>
-            <PostCard key={post.urlPath}>
-              <PostCard.Tags tags={post.tags}></PostCard.Tags>
-              <PostCard.Date>{post.date}</PostCard.Date>
-              <PostCard.Title>{post.title}</PostCard.Title>
-              <Link href={post.urlPath} passHref>
-                <a>Read more...</a>
-              </Link>
-            </PostCard>
-            <PostCard key={post.urlPath}>
-              <PostCard.Tags tags={post.tags}></PostCard.Tags>
-              <PostCard.Date>{post.date}</PostCard.Date>
-              <PostCard.Title>{post.title}</PostCard.Title>
-              <Link href={post.urlPath} passHref>
-                <a>Read more...</a>
-              </Link>
-            </PostCard>
-            <PostCard key={post.urlPath}>
-              <PostCard.Tags tags={post.tags}></PostCard.Tags>
-              <PostCard.Date>{post.date}</PostCard.Date>
-              <PostCard.Title>{post.title}</PostCard.Title>
-              <Link href={post.urlPath} passHref>
-                <a>Read more...</a>
-              </Link>
-            </PostCard>
-            <PostCard key={post.urlPath}>
-              <PostCard.Tags tags={post.tags}></PostCard.Tags>
-              <PostCard.Date>{post.date}</PostCard.Date>
-              <PostCard.Title>{post.title}</PostCard.Title>
-              <Link href={post.urlPath} passHref>
-                <a>Read more...</a>
-              </Link>
-            </PostCard>
-            <PostCard key={post.urlPath}>
-              <PostCard.Tags tags={post.tags}></PostCard.Tags>
-              <PostCard.Date>{post.date}</PostCard.Date>
-              <PostCard.Title>{post.title}</PostCard.Title>
-              <Link href={post.urlPath} passHref>
-                <a>Read more...</a>
-              </Link>
-            </PostCard>
-          </>
+          <PostCard key={post.urlPath}>
+            <PostCard.Tags tags={post.tags}></PostCard.Tags>
+            <PostCard.Date>{post.date}</PostCard.Date>
+            <PostCard.Title>{post.title}</PostCard.Title>
+            <PostCard.Description>{post.description}</PostCard.Description>
+            <Link href={post.urlPath} passHref>
+              <a>Read more...</a>
+            </Link>
+          </PostCard>
         ))}
       </Posts>
     </Layout>
@@ -95,7 +63,8 @@ export const getStaticProps: GetStaticProps = async () => {
     for await (const f of getFiles(rootDir)) {
       const relativePath = relative(rootDir, f)
       const {metadata} = await import('../content/' + relativePath)
-      metadata.urlPath = '/' + relativePath.split('.').slice(0, -1).join('.')
+      metadata.urlPath =
+        '/notes/' + relativePath.split('.').slice(0, -1).join('.')
       // console.log(metadata.urlPath)
       meta.push(metadata)
     }

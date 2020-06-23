@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Container, Date, Tag, Title} from './styles/PostCard'
+import {Container, Date, Description, Tag, Title} from './styles/PostCard'
 
 interface TagProps {
   tags: string[]
@@ -10,6 +10,7 @@ interface IPostCard {
   Date: React.FC
   Tags: React.FC<TagProps>
   Title: React.FC
+  Description: React.FC
 }
 
 export const PostCard: React.FC & IPostCard = ({children}) => {
@@ -48,3 +49,9 @@ PostCard.Title = ({children}) => {
 }
 
 PostCard.Title.displayName = 'PostCard.Title'
+
+PostCard.Description = ({children}) => {
+  return <Description>{children}</Description>
+}
+
+PostCard.Description.displayName = 'PostCard.Description'

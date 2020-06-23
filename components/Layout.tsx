@@ -13,7 +13,9 @@ import {Container} from './styles/Layout'
 
 interface Props {
   title: string
-  navTitle: string
+  description?: string
+  date?: string
+  isMDX?: boolean
 }
 
 const components = {
@@ -28,8 +30,8 @@ const components = {
   del: styled.span`
     text-decoration: line-through;
   `,
-  inlineCode: styled.pre`
-    color: wheat;
+  inlineCode: styled.span`
+    background-color: wheat;
   `,
   em: styled.b``,
   h1: styled.h1`
@@ -38,7 +40,9 @@ const components = {
   h2: styled.h2`
     font-family: merriweather, serif;
   `,
-  h3: styled.h3``,
+  h3: styled.h3`
+    font-family: merriweather, serif;
+  `,
   h4: styled.h4``,
   h5: styled.h5``,
   h6: styled.h6``,
@@ -51,7 +55,7 @@ const components = {
     margin: 1rem 0;
   `,
   pre: styled.pre`
-    margin: 1rem 0;
+    margin: 0;
   `,
   strong: styled.b``,
   table: styled.table`
@@ -71,7 +75,13 @@ const components = {
   `,
 }
 
-export const Layout: React.FC<Props> = ({children, title, navTitle}) => {
+export const Layout: React.FC<Props> = ({
+  children,
+  title,
+  description = '',
+  date = '',
+  isMDX = false,
+}) => {
   const [loading, setLoading] = useState(false)
   Router.events.on('routeChangeStart', () => {
     setLoading(true)
@@ -87,31 +97,60 @@ export const Layout: React.FC<Props> = ({children, title, navTitle}) => {
 
   return (
     <Container>
+      <Head>
+        <title>{title}</title>
+        <meta
+          name="viewport"
+          content="width=device-width, user-scalable=no"
+        ></meta>
+      </Head>
+      <Avatar></Avatar>
+      <Description>
+        <Description.Title>Vishal Goud</Description.Title>
+        <Description.Caption>Full Stack Developer</Description.Caption>
+      </Description>
+      <Nav>
+        <Nav.Menu></Nav.Menu>
+      </Nav>
+      <NavBar>
+        <NavBar.Logo>&lt;vishu /&gt;</NavBar.Logo>
+        <NavBar.Title>{date}</NavBar.Title>
+      </NavBar>
       <MDXProvider components={components}>
-        <Head>
-          <title>{title}</title>
-          <meta
-            name="viewport"
-            content="width=device-width, user-scalable=no"
-          ></meta>
-        </Head>
-        <Avatar></Avatar>
-        <Description>
-          <Description.Title>Vishal Goud</Description.Title>
-          <Description.Caption>Full Stack Developer</Description.Caption>
-        </Description>
-        <Nav>
-          <Nav.Menu></Nav.Menu>
-        </Nav>
-        <NavBar>
-          <NavBar.Logo>&lt;pvgdev /&gt;</NavBar.Logo>
-          <NavBar.Title>{navTitle}</NavBar.Title>
-        </NavBar>
         <div className="content">
           {loading && <div className="content">Loading...</div>}
-          {!loading && children}
+          {!loading && isMDX && (
+            <MDXHeader title={title} description={description} date={date}>
+              {children}
+            </MDXHeader>
+          )}
+          {!loading && !isMDX && children}
         </div>
       </MDXProvider>
     </Container>
+  )
+}
+
+interface MDXHeaderProps {
+  title: string
+  description: string
+  date: string
+}
+
+export const MDXHeader: React.FC<MDXHeaderProps> = ({
+  title,
+  description,
+  date,
+  children,
+}) => {
+  return (
+    <div>
+      <components.h2>{title}</components.h2>
+      <p>{description}</p>
+      <components.em>{date}</components.em>
+      <br />
+      <components.hr />
+      {children}
+    </div>
   )
 }

@@ -1,15 +1,55 @@
+import {mdx} from '@mdx-js/react'
 import Highlight, {defaultProps} from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
 import React from 'react'
+import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live'
 
-export const CodeBlock = props => {
-  const {className = 'javascript', children} = props
+export const CodeBlock = ({
+  children,
+  className = 'javascript',
+  live,
+  render,
+}) => {
   const language = className.replace(/language-/, '')
+
+  if (language === 'jsx') {
+    if (live) {
+      return (
+        <div style={{marginTop: '40px'}}>
+          <LiveProvider
+            code={children.trim()}
+            transformCode={code => '/** @jsx mdx */' + code}
+            scope={{mdx}}
+            theme={theme}
+          >
+            <LivePreview />
+            <LiveEditor />
+            <LiveError />
+          </LiveProvider>
+        </div>
+      )
+    }
+
+    if (render) {
+      return (
+        <div style={{marginTop: '40px'}}>
+          <LiveProvider
+            code={children.trim()}
+            transformCode={code => '/** @jsx mdx */' + code}
+            scope={{mdx}}
+            theme={theme}
+          >
+            <LivePreview />
+          </LiveProvider>
+        </div>
+      )
+    }
+  }
 
   return (
     <Highlight
       {...defaultProps}
-      code={children}
+      code={children.trim()}
       language={language}
       theme={theme}
     >
@@ -19,7 +59,7 @@ export const CodeBlock = props => {
           style={{
             ...style,
             maxWidth: '100vw',
-            overflow: 'scroll',
+            overflow: 'auto',
             padding: '10px',
             fontFamily: 'courier-prime-code',
           }}

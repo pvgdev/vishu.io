@@ -6,7 +6,7 @@
       "@components": ["components"],
       "@components/*": ["components/*"]
     },
-    "typeRoots": ["./typings"],
+    "typeRoots": ["node_modules/@types", "./typings"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
