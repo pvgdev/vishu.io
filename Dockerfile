@@ -6,7 +6,7 @@ WORKDIR /home/node/app
 
 COPY --chown=node:node package-lock.json package.json ./
 
-RUN npm install --silent
+RUN npm ci
 
 COPY --chown=node:node . .
 
