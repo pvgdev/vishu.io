@@ -6,11 +6,12 @@
       "jsx": true
     }
   },
-  "plugins": ["simple-import-sort", "react-hooks", "jest"],
+  "plugins": ["simple-import-sort", "react-hooks", "jest", "jsx-a11y"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "eslint-config-prettier"
+    "eslint-config-prettier",
+    "plugin:jsx-a11y/recommended"
   ],
   "rules": {
     "strict": ["error", "never"],
@@ -18,7 +19,8 @@
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   },
   "settings": {
     "react": {

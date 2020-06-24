@@ -1,6 +1,5 @@
 {
   "*.+(js|jsx|ts|tsx)": [
-    "eslint",
     "jest --findRelatedTests",
     "git add"
   ],
