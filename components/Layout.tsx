@@ -32,6 +32,8 @@ const components = {
   `,
   inlineCode: styled.span`
     background-color: wheat;
+    font-weight: bold;
+    padding: 0 1rem;
   `,
   em: styled.b``,
   h1: styled.h1`

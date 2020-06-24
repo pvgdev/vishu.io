@@ -58,7 +58,7 @@ export const CodeBlock = ({
           className={className}
           style={{
             ...style,
-            maxWidth: '100vw',
+            maxWidth: '800px',
             overflow: 'auto',
             padding: '10px',
             fontFamily: 'courier-prime-code',

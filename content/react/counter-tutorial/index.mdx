@@ -1,21 +1,169 @@
+import {Counter} from './Counter'
+import BeforeTDD from './1.png'
+import {styled} from 'styled-components'
+
 export const metadata = {
   author: 'vishal',
   date: '22 June, 2020',
   tags: ['react', 'typescript'],
-  title: `Building simple react Counter component with TDD`,
+  title: `Test driven approach to build a simple react Counter component - 1`,
   description: `I will try to build a simple react component which will help me
    understand how local state and props work`,
   urlPath: '/react/counter-tutorial'
 }
 
-Create an empty react component named `Counter.tsx` with the following code.
+I want to build a react component which displays a counter with initial value of
+`0` and two buttons `+` and `-` each incrementing or decrementing the count by `1`
+when clicked.
+
+### Counter component must satisfy the following constraints
+
+1. It should be accessible 
+2. It should have a label `counter` where the value of counter is presented.
+3. It should have `+` button which on click should increment counter value by `1`
+4. It should have `-` button which on click should decrement counter value by `1`
+
+### Which leads to the following two test cases.
+
+```jsx
+import {fireEvent, render} from '@testing-library/react'
+import {axe} from 'jest-axe'
+import React from 'react'
+
+import {Counter} from '../Counter'
+
+test('Counter component is accessible', async () => {
+  const {container} = render(<Counter />)
+  expect(await axe(container)).toHaveNoViolations()
+})
+
+test('increment and decrement should work properly', () => {
+  const {getByLabelText, getByText} = render(<Counter />)
+
+  const counter = getByLabelText(/counter/i)
+  expect(counter).toHaveTextContent('0')
+
+  fireEvent.click(getByText('+'))
+  expect(counter).toHaveTextContent('1')
+
+  fireEvent.click(getByText('-'))
+  expect(counter).toHaveTextContent('0')
+})
+```
+
+### Create an empty Counter class component 
 
 ```tsx
 import React from 'react'
 
-const Counter: React.FC = () => {
-  return <div></div>
+export class Counter extends React.Component {
+  render() {
+    return (
+      <div>
+        <h2>Counter</h2>
+      </div>
+    )
+  }
 }
 
-export default Counter
+```
+
+Now running `npm run test` will display a failing test   
+
+
+```
+ FAIL   client  content/react/counter-tutorial/__tests__/Counter.tsx
+  ● increment and decrement should work properly
+
+    TestingLibraryElementError: Unable to find a label with the text of: /counter/i
+```
+
+Now drive the UI development by fixing the failing test cases. This is called 
+red, green, refactor cycle. First we try to make all the test cases green(pass)
+and then try to to refactor the solution for optimization and edge cases.
+
+### Things to do to fix the failing test cases:
+
+1. Create two buttons for `+` and `-`.
+2. Create `increment` and `decrement` event handlers.
+3. Set `onClick` event handlers to `increment` and `decrement` for `+` and `-` respectively.
+4. Bind the event handlers to the `this` instance of the class.
+5. Initialize the state in the constructor.
+6. Update the state as needed in the event handlers.
+7. Render the state with `{this.state.count}` in the render method.
+8. Add some styling to the `Counter` component.
+
+```tsx
+import React from 'react'
+import styled from 'styled-components'
+
+interface State {
+  count: number
+}
+
+export class Counter extends React.Component<null, State> {
+  constructor(props: null) {
+    super(props)
+    this.state = {count: 0}
+    this.increment = this.increment.bind(this)
+    this.decrement = this.decrement.bind(this)
+  }
+
+  increment() {
+    this.setState(prevState => ({count: prevState.count + 1}))
+  }
+
+  decrement() {
+    this.setState(prevState => ({count: prevState.count - 1}))
+  }
+
+  render() {
+    return (
+      <Container>
+        <H2>Counter</H2>
+        <Button onClick={this.decrement}>-</Button>
+        <StyledSpan aria-label="counter">{this.state.count}</StyledSpan>
+        <Button onClick={this.increment}>+</Button>
+      </Container>
+    )
+  }
+}
+
+const Container = styled.div`
+  text-align: center;
+  border: 1px solid gray;
+  padding: 1rem;
+`
+
+const H2 = styled.h2``
+
+const Button = styled.button`
+  padding: 0 1rem;
+  border: 1px solid black;
+`
+
+const StyledSpan = styled.span`
+  padding: 0 2rem;
+`
+
+```
+
+### Renders the following
+
+<Counter />
+
+Add some styling to `<Counter />` component
+
+### All the tests should be passing
+
+```
+PASS   client  content/react/counter-tutorial/__tests__/Counter.tsx
+  ✓ Counter component is accessible (216 ms)
+  ✓ increment and decrement should work properly (16 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.6 s, estimated 3 s
+Ran all test suites related to changed files.
 ```
