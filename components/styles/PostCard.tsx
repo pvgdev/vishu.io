@@ -23,7 +23,7 @@ export const Date = styled.div`
   color: rgba(112, 117, 125, 1);
 `
 
-export const Title = styled.h2`
+export const Title = styled.h3`
   font-family: merriweather, serif;
 `
 

@@ -21,19 +21,21 @@ interface Props {
 const components = {
   blockquote: styled.div`
     margin: 1rem 0;
+    padding: 1rem;
     border: 0px;
-    border-left: 10px;
+    border-left: 5px;
     border-style: solid;
-    border-color: blue;
+    border-color: rgba(61, 126, 154, 1);
+    background-color: rgba(255, 247, 208, 1);
   `,
   code: CodeBlock,
   del: styled.span`
     text-decoration: line-through;
   `,
   inlineCode: styled.span`
-    background-color: wheat;
+    background-color: rgba(255, 250, 224, 1);
     font-weight: bold;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
   `,
   em: styled.b``,
   h1: styled.h1`
@@ -147,7 +149,7 @@ export const MDXHeader: React.FC<MDXHeaderProps> = ({
 }) => {
   return (
     <div>
-      <components.h2>{title}</components.h2>
+      <components.h3>{title}</components.h3>
       <p>{description}</p>
       <components.em>{date}</components.em>
       <br />

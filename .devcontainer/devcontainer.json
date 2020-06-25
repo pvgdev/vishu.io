@@ -39,15 +39,16 @@
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
-    "dsznajder.es7-react-js-snippets",
-    "andys8.jest-snippets",
-    "jpoissonnier.vscode-styled-components",
-    "naumovs.color-highlight",
-    "sdras.night-owl",
-    "silvenon.mdx"
-  ]
+	"esbenp.prettier-vscode",
+	"dbaeumer.vscode-eslint",
+	"dsznajder.es7-react-js-snippets",
+	"andys8.jest-snippets",
+	"jpoissonnier.vscode-styled-components",
+	"naumovs.color-highlight",
+	"sdras.night-owl",
+	"silvenon.mdx",
+	"streetsidesoftware.code-spell-checker"
+]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
