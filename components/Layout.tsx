@@ -53,7 +53,7 @@ const components = {
   li: styled.li``,
   hr: styled.hr``,
   ol: styled.ol`
-    list-style-position: inside;
+    padding-left: 4rem;
   `,
   p: styled.p`
     margin: 1rem 0;
@@ -75,7 +75,7 @@ const components = {
     border: 1px solid black;
   `,
   ul: styled.ul`
-    list-style-position: inside;
+    padding-left: 4rem;
   `,
 }
 

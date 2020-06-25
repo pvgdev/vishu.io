@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+interface TagProps {
+  color: string
+  bgColor: string
+}
+
 export const Container = styled.div`
   width: 100%;
   margin: 1rem;
@@ -10,11 +15,11 @@ export const Container = styled.div`
   /* align-items: center; */
 `
 
-export const Tag = styled.span`
+export const Tag = styled.span<TagProps>`
   padding: 2px 4px;
   font-weight: bold;
   color: ${props => (props.color ? props.color : 'white')};
-  background-color: ${props => props.theme.color};
+  background-color: ${props => (props.bgColor ? props.bgColor : 'white')};
   /* border: 1px solid ${props => props.theme.color}; */
   margin-right: 1rem;
 `

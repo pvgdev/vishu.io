@@ -30,11 +30,24 @@ PostCard.Tags = ({tags}) => {
     html: 'rgba(78, 110, 138, 1)',
     react: 'rgba(97, 218, 251, 1)',
     redux: 'rgba(89, 61, 136, 1)',
+    javascript: 'rgba(0, 0, 0, 1)',
+    typescript: 'rgba(255, 255, 255, 1)',
   }
+
+  const tagBgColors = {
+    css: 'orange',
+    js: 'rgba(247, 223, 30, 1)',
+    html: 'rgba(78, 110, 138, 1)',
+    react: 'rgba(32, 35, 42, 1)',
+    redux: 'rgba(89, 61, 136, 1)',
+    javascript: 'rgba(247, 223, 30, 1)',
+    typescript: 'rgba(0, 122, 204, 1)',
+  }
+
   return (
     <div>
       {tags.map(tag => (
-        <Tag key={tag} color={tagColors[tag]}>
+        <Tag key={tag} color={tagColors[tag]} bgColor={tagBgColors[tag]}>
           {tag.toUpperCase()}
         </Tag>
       ))}

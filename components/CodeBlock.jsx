@@ -1,7 +1,7 @@
 import {mdx} from '@mdx-js/react'
 import Highlight, {defaultProps} from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
-import React from 'react'
+import React, {useState} from 'react'
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live'
 
 export const CodeBlock = ({
@@ -58,7 +58,7 @@ export const CodeBlock = ({
           className={className}
           style={{
             ...style,
-            maxWidth: '800px',
+            maxWidth: '100vw',
             overflow: 'auto',
             padding: '10px',
             fontFamily: 'courier-prime-code',

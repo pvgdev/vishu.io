@@ -5,21 +5,18 @@ interface State {
   count: number
 }
 
-export class Counter extends React.Component<unknown, State> {
+export class CounterNoThis extends React.Component<unknown, State> {
   constructor(props: null) {
     super(props)
     this.state = {count: 0}
-    this.increment = this.increment.bind(this)
-    this.decrement = this.decrement.bind(this)
   }
 
   increment() {
-    this.setState(prevState => ({count: prevState.count + 1}))
-    console.log('+ clicked')
+    alert('"+" button is clicked')
   }
 
   decrement() {
-    this.setState(prevState => ({count: prevState.count - 1}))
+    alert('"-" button is clicked')
   }
 
   render() {
