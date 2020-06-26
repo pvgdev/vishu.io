@@ -1,10 +1,192 @@
+import {Img} from '@components'
+
 export const metadata = {
   author: 'vishal',
   date: '25 June, 2020',
   tags: ['javascript'],
-  title: `What exactly is the prototype property on a javascript function?
-  Clearing the confusion between __proto__, [[Prototype]] and prototype`,
-  description: `I will dig into the details of how prototype works`,
+  title: `Understanding 'prototype' property on every function`,
+  description: `In this post we will explore how .prototype can be used 
+  to create objects with shared behavior`,
   urlPath: '/javascript/what-is-prototype'
 }
+
+> Note: I'm going to use Mozilla Firefox developer tools for this post 
+because google chrome is not displaying the internal structure of `Function.prototype`
+
+Let's examine the structure of a plain JavaScript object.
+
+```js
+var obj = {}
+
+console.log(obj.__proto__ === Object.prototype) // Outputs: true
+```
+
+> Every plain JavaScript object's internal `[[Prototype]]` is linked to Object.Prototype 
+and `Object.Prototype` doesn't have any internal `[[Prototype]]` property putting
+end to the prototype chain. 
+
+
+I'm going to create an empty function in javascript and examine it's structure.
+
+
+```js 
+function myFunction() {
+
+}
+
+console.log(myFunction) 
+```
+**Outputs:**
+<Img>
+  <img src={require('./images/myFunction.png')} />
+</Img>
+
+Let's check the internal [[Prototype]] property on `myFunction` using `__proto__`
+```js
+console.log(myFunction.__proto__) 
+```
+
+**Outputs:**
+<Img>
+  <img src={require('./images/myFunctionProto.png')} />
+</Img>
+
+Let's check the internal [[Prototype]] property on `Function` using `__proto__`
+````js
+console.log(Function.__proto__) 
+````
+**Outputs:**
+<Img>
+  <img src={require('./images/FunctionProto.png')} />
+</Img>
+
+Both `Function.__proto__` and `myFunction.__proto__` look similar in structure. 
+Let's check if `Function.__proto__` is being copied to `myFunction.__proto__` or
+both whether both point to the same object in memory.
+
+````js
+console.log(myFunction instanceOf Function) // true
+console.log(Function.__proto__ === myFunction.__proto__) // true 
+````
+
+The three important takeaways from the above result are:
+> Every function is an instance of built in `Function` object 
+
+> Every function's internal `[[Prototype]]` point to the same memory location that
+`Function.[[Prototype]]` points to.
+
+> `Function.[[Prototype]].[[Prototype]]` point to the same memory location `Object.prototype` 
+points to and that is the end of the prototype chain for functions and the objects functions create.  
+
+***
+
+### The `new` operator
+
+From Mozilla developer network the new operator does the following things:
+
+1. Creates a blank, plain JavaScript object.
+2.Makes the new object's internal `[[Prototype]]` point to the same memory location 
+that .prototype of the function used in `constructor call` points to.
+3. Passes the newly created object from Step 1 as the this context.
+4. Returns this if the function doesn't return an object.
+
+### Claim 1: Creates a blank, plain JavaScript object
+
+```js
+function createObj() {}
+
+// Constructor call
+var newObj1 = new createObj();
+
+console.log(newObj1)
+```
+**Outputs** `{}` which is an empty object.
+
+### Claim 2: Makes the new object's internal `[[Prototype]]` point to the same memory location that .prototype of the function used in `constructor call` points to.
+```js
+function createObj() {}
+
+// Constructor call
+var newObj1 = new createObj();
+
+console.log(newObj1.__proto__ === createObj.prototype)
+```
+
+**Outputs** true which means `newObj1.__proto__` and `createObj.prototype` point
+to the same memory location.
+
+### Claim 3: Passes the newly created object from Step 1 as the this context.
+### Claim 4: Returns this if the function doesn't return an object.
+
+```js
+function createObj() {
+  this.a = 10;
+}
+
+// Constructor call
+var newObj1 = new createObj();
+
+console.log(newObj1.a) // Outputs: 10
+```
+
+Here after the `new createObj()` constructor call creates a new object in memory 
+and points `this` to that memory location. We also add a property `a` to `this`
+and set it's value to 10. Which is reflected immediately onto the `newObj1.a` showing
+that `newObj1` and this indeed points to the same memory location during the `constructor call`.
+
+### What does `newObj1.__proto__` point to?
+
+```js
+function createObj() {
+  this.a = 10;
+}
+
+// Constructor call
+var newObj1 = new createObj();
+
+console.log(newObj1.__proto__.__proto__ === Object.prototype) // Outputs: true
+```
+
+> Every object created with `new createObj()` constructor call will have it's internal
+`[[Prototype]]` pointing to the same memory location as `createObj.prototype` points to.
+
+> `createObj.prototype` will have it's internal `[[Prototype]]` point to the same memory
+location `Object.prototype` points to.
+
+***
+
+### How do we share behavior with all objects created with constructor calls like `new createObj()`?
+
+We just need to add our shared behavior(functions shared by all objects) to the 
+`createObj.prototype` and every object will have access to that behavior due to 
+prototype chaining.
+
+
+```js
+function createObj() {
+  this.a = 10;
+}
+
+createObj.prototype.display = function () {
+  console.log('Value of a is: ', this.a);
+}
+
+// Constructor call
+var newObj1 = new createObj();
+
+var newObj2 = new createObj();
+
+newObj2.a = 20;
+
+newObj1.display(); // Outputs: 'Value of a is:  10'
+
+newObj2.display(); // Outputs: 'Value of a is:  20'
+```
+
+> All objects created by `new createObj()` will have shared access to createObj.prototype.
+So we can add all shared behavior to `createObj.prototype` 
+
+
+> Prototype chain can be used to replace inheritance model completely. 
+
 
