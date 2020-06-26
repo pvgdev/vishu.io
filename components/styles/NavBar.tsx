@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   grid-area: navbar;
-
+  font-family: courier-prime, monospace;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

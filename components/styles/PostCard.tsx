@@ -17,7 +17,7 @@ export const Container = styled.div`
 
 export const Tag = styled.span<TagProps>`
   padding: 2px 4px;
-  font-weight: bold;
+  font-family: courier-prime, monospace;
   color: ${props => (props.color ? props.color : 'white')};
   background-color: ${props => (props.bgColor ? props.bgColor : 'white')};
   /* border: 1px solid ${props => props.theme.color}; */

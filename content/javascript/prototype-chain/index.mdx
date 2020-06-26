@@ -1,0 +1,124 @@
+import {Img} from '@components'
+
+export const metadata = {
+  author: 'vishal',
+  date: '26 June, 2020',
+  tags: ['javascript'],
+  title: `Understanding prototype chain in JavaScript`,
+  description: `Prototype chain is the key to understanding of how
+  object creation and classes work in Javascript`,
+  urlPath: '/javascript/prototype-chain'
+}
+
+In JavaScript the concept of inheritance doesn't exist and every type of data 
+representation is in the form of an `object`. Even the primitive types are linked 
+to existing objects.
+
+The following is the mapping of primitive types to existing objects.
+
+| Primitive Type     | Prototype linked to|
+| ------------- |:-------------:| 
+| 10| Number.prototype |
+| "Hello, world"| String.prototype |
+| true or false | Boolean.prototype |
+
+If you try to check the properties on `Number.prototype` in developer tools you 
+will find the following output
+
+<Img>
+  <img src={require('./images/number_prototype.png')} />
+</Img>
+
+Declare a variable `a` and check the properties on it's internal `[[Prototype]]`
+property. But how do we do that? We can't access `[[Prototype]]` and we are not 
+supposed to that according the language spec. Oddly, some browser expose access 
+to `[[Prototype]]` using a property called `__proto__` 
+
+> `__proto__` is the same as `[[Prototype]]`. `[[Prototype]]` isn't publicly accessible
+but some browsers expose `__proto__` as a work around. You're not supposed to either 
+and it is suggested to avoid them altogether.
+
+```js
+var a = 10;
+
+console.log(a.__proto__)
+```
+
+will output 
+
+<Img>
+  <img src={require('./images/a_prototype.png')} />
+</Img>
+
+**Wait**, doesn't that look familiar? Both `a.__proto__` looks the same as `Number.prototype`
+
+### So what exactly is happening?
+
+Is `Number.prototype` being copied to `__proto__` property of every variable that
+stores a `number` primitive value? Let's make a little check
+
+```js
+var a = 10;
+
+console.log(a.__proto__ === Number.prototype)
+```
+
+Outputs:
+<Img>
+  <img src={require('./images/a_eq_Number.png')} />
+</Img>
+
+> So `a.__proto__` and Number.prototype point to the same thing in memory. There is 
+no copying being done. 
+
+### In the absence of a property on a object `JS runtime` will search it's prototype chain
+
+```js
+var a = 9.9999;
+
+console.log(a.toFixed(2))
+```
+
+We have not created a property named `toFixed` and set it's value to `Number.prototype.toFixed`
+but yet we are able to access all the toFixed method on `a` variable because `JS runtime`
+will start looking on the prototype chain. 
+
+Basically `JS runtime` will keep looking on internal property `[[Prototype]]` until
+it finds what it is looking for. If it doesn't find what it's looking for even after
+reaching the end of Prototype chain i.e `Object.prototype` it will return `undefined`.
+
+***
+
+### Prototype chain exercise
+
+Create an object `account` with account `name` and `type` of account as properties.
+Now add a function `display` on to the `__proto__` property on account to display
+account details.
+
+```js
+var account = {
+  name: 'vishal',
+  type: 'savings'
+}
+
+account.__proto__.display = function() {
+  console.log(`
+  Account name: ${this.name}
+  Account type: ${this.type}
+  `)
+}
+
+// display isn't found account object so it looks up on the account.__proto__ or 
+// account's internal [[Prototype]] property. 
+account.display();
+```
+
+Outputs:
+
+```
+Account name: vishal
+Account type: savings
+```
+
+> JS `runtime` keeps looking for a property in the prototype chain. If it doesn't 
+find what it is looking for even after reach Object.prototype it returns `undefined`.

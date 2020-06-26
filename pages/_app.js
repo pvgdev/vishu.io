@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     max-width: 100vw;
     box-sizing: border-box;
-    font-family: courier-prime, monospace;
+    font-family: merriweather, monospace;
     font-size: 1.6rem;
     line-height: 1.5;
     background-color: ${props => props.theme.backgroundColor};

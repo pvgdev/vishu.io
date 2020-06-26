@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.nav`
   display: none;
+  font-family: courier-prime, monospace;
 
   @media only screen and (min-width: 600px) {
     grid-area: nav;
