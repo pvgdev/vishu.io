@@ -58,10 +58,11 @@ export const CodeBlock = ({
           className={className}
           style={{
             ...style,
+            fontSize: '1.5rem',
             maxWidth: '100vw',
             overflow: 'auto',
             padding: '10px',
-            fontFamily: 'courier-prime-code',
+            borderRadius: '5px',
           }}
         >
           {tokens.map((line, i) => (

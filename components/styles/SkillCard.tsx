@@ -6,7 +6,6 @@ interface SkillCardProps {
 }
 
 export const Container = styled.span<SkillCardProps>`
-  padding: 15px;
   color: ${props => props.color};
   background-color: ${props => props.backgroundColor};
   display: flex;
@@ -16,5 +15,7 @@ export const Container = styled.span<SkillCardProps>`
 `
 
 export const Title = styled.p`
-  margin-top: 5px;
+  font-family: courier-prime, serif;
+
+  margin-top: 15px;
 `

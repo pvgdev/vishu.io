@@ -20,7 +20,7 @@ interface Props {
 
 export const index: React.FC<Props> = ({posts}) => {
   return (
-    <Layout title="Home | vishu.io">
+    <Layout title="Home | vishu.io" navTitle="Home">
       <Posts>
         {posts.map(post => (
           <PostCard key={post.urlPath}>
@@ -28,9 +28,11 @@ export const index: React.FC<Props> = ({posts}) => {
             <PostCard.Date>{post.date}</PostCard.Date>
             <PostCard.Title>{post.title}</PostCard.Title>
             <PostCard.Description>{post.description}</PostCard.Description>
-            <Link href={post.urlPath} passHref>
-              <a>Read more...</a>
-            </Link>
+            <PostCard.ReadMore>
+              <Link href={post.urlPath} passHref>
+                <a>Read&nbsp;&gt;&gt;&gt;</a>
+              </Link>
+            </PostCard.ReadMore>
           </PostCard>
         ))}
       </Posts>

@@ -1,14 +1,13 @@
 import React from 'react'
 
-// import MyPicture from '../images/avatar.png?trace'
-// import {Container} from './styles/Avatar'
+import MyPicture from '../images/avatar.png?trace'
+import {Container} from './styles/Avatar'
 
 export const Avatar: React.FC = () => {
   return (
     <>
-      {/* <Container src={MyPicture.trace} />
-      <Container src={MyPicture.src} /> */}
-      <div style={{gridArea: 'avatar'}}>Profile pic coming soon...</div>
+      <Container src={MyPicture.trace} />
+      <Container src={MyPicture.src} />
     </>
   )
 }

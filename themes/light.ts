@@ -1,7 +1,7 @@
 import {DefaultTheme} from 'styled-components'
 
 const lightTheme: DefaultTheme = {
-  backgroundColor: 'white',
+  backgroundColor: 'rgba(255, 255, 255, 1)',
   color: 'black',
 }
 

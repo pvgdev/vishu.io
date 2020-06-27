@@ -4,9 +4,7 @@ import Router from 'next/router'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 
-import {Avatar} from './Avatar'
 import {CodeBlock} from './CodeBlock'
-import {Description} from './Description'
 import {Nav} from './Nav'
 import {NavBar} from './NavBar'
 import {Container} from './styles/Layout'
@@ -16,6 +14,7 @@ interface Props {
   description?: string
   date?: string
   isMDX?: boolean
+  navTitle?: string
 }
 
 const components = {
@@ -84,6 +83,7 @@ export const Layout: React.FC<Props> = ({
   title,
   description = '',
   date = '',
+  navTitle,
   isMDX = false,
 }) => {
   const [loading, setLoading] = useState(false)
@@ -108,21 +108,34 @@ export const Layout: React.FC<Props> = ({
           content="width=device-width, user-scalable=no"
         ></meta>
       </Head>
-      <Avatar></Avatar>
+      {/* <Avatar></Avatar>
       <Description>
         <Description.Title>Vishal Goud</Description.Title>
         <Description.Caption>Full Stack Developer</Description.Caption>
-      </Description>
+      </Description> */}
       <Nav>
-        <Nav.Menu></Nav.Menu>
+        <Nav.MenuLeft></Nav.MenuLeft>
+        <Nav.MenuRight></Nav.MenuRight>
       </Nav>
       <NavBar>
         <NavBar.Logo>&lt;vishu /&gt;</NavBar.Logo>
-        <NavBar.Title>{date}</NavBar.Title>
+        <NavBar.Title>{navTitle !== undefined ? navTitle : date}</NavBar.Title>
       </NavBar>
       <MDXProvider components={components}>
         <div className="content">
-          {loading && <div className="content">Loading...</div>}
+          {loading && (
+            <div className="sk-cube-grid">
+              <div className="sk-cube sk-cube1"></div>
+              <div className="sk-cube sk-cube2"></div>
+              <div className="sk-cube sk-cube3"></div>
+              <div className="sk-cube sk-cube4"></div>
+              <div className="sk-cube sk-cube5"></div>
+              <div className="sk-cube sk-cube6"></div>
+              <div className="sk-cube sk-cube7"></div>
+              <div className="sk-cube sk-cube8"></div>
+              <div className="sk-cube sk-cube9"></div>
+            </div>
+          )}
           {!loading && isMDX && (
             <MDXHeader title={title} description={description} date={date}>
               {children}
@@ -149,7 +162,7 @@ export const MDXHeader: React.FC<MDXHeaderProps> = ({
 }) => {
   return (
     <div>
-      <components.h3>{title}</components.h3>
+      <components.h2>{title}</components.h2>
       <p>{description}</p>
       <components.em>{date}</components.em>
       <br />

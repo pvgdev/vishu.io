@@ -35,7 +35,7 @@
     "workbench.colorTheme": "Night Owl",
     "window.titleBarStyle": "custom",
     "terminal.integrated.shell.linux": "/bin/zsh",
-    "cSpell.diagnosticLevel": "Information"
+    "cSpell.diagnosticLevel": "Hint"
   },
 
   // Add the IDs of extensions you want installed when the container is created.

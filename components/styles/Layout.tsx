@@ -25,30 +25,22 @@ export const Container = styled.div`
   max-width: 800px;
   display: grid;
   grid-template-columns:
-    [navbar-start content-start] 1rem
-    [avatar-start] 150px
-    [avatar-end] 2rem
-    [description-start] 1fr
-    [description-end ] 2rem
+    [navbar-start content-start] auto
     [navbar-end content-end];
   grid-template-rows:
     [navbar-start] 5rem
     [navbar-end] 1rem
-    [avatar-start description-start] auto
-    [avatar-end description-end] 5rem
     [content-start] 1fr
     [content-end];
 
   @media only screen and (min-width: 600px) {
     grid-template-columns:
-      [avatar-start content-start] 200px
-      [avatar-end] 3rem
-      [description-start] 2fr
-      [description-end nav-start] auto [content-end nav-end];
+      [nav-start content-start] auto
+      [nav-end content-end];
     grid-template-rows:
-      3rem
-      [avatar-start description-start nav-start] auto
-      [avatar-end description-end nav-end] 5rem
+      2rem
+      [nav-start] 3rem
+      [nav-end] 1rem
       [content-start] 1fr
       [content-end];
   }

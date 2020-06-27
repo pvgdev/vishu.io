@@ -7,11 +7,11 @@ interface TagProps {
 
 export const Container = styled.div`
   width: 100%;
-  margin: 1rem;
-  padding: 1rem;
+  padding: 0px 1rem;
   display: flex;
   flex-direction: column;
   align-self: center;
+  /* background-color: rgba(250, 248, 246, 1); */
   /* align-items: center; */
 `
 
@@ -21,11 +21,12 @@ export const Tag = styled.span<TagProps>`
   color: ${props => (props.color ? props.color : 'white')};
   background-color: ${props => (props.bgColor ? props.bgColor : 'white')};
   /* border: 1px solid ${props => props.theme.color}; */
+    margin: 3rem 0;
   margin-right: 1rem;
 `
 
 export const Date = styled.div`
-  color: rgba(112, 117, 125, 1);
+  /* color: rgba(112, 117, 125, 1); */
 `
 
 export const Title = styled.h3`
@@ -33,3 +34,20 @@ export const Title = styled.h3`
 `
 
 export const Description = styled.p``
+
+export const ReadMore = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+
+  a {
+    border: 1px solid black;
+    padding: 5px 1rem;
+    display: inline;
+    /* background-color: rgba(255, 75, 168, 1);
+    background-color: rgba(254, 103, 58, 1); */
+    /* margin: 3rem 0; */
+    color: black;
+    text-decoration: none;
+  }
+`

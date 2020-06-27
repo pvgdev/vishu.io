@@ -1,33 +1,36 @@
 import styled from 'styled-components'
 
-export const Container = styled.nav`
+export const Container = styled.header`
   display: none;
-  font-family: courier-prime, monospace;
-
   @media only screen and (min-width: 600px) {
     grid-area: nav;
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
   }
 `
 
-export const Menu = styled.div`
+export const MenuLeft = styled.h2`
   display: flex;
-  flex-direction: column;
+  flex: 1;
   align-self: right;
 `
 
+export const MenuRight = styled.nav`
+  display: flex;
+  flex: 2;
+  justify-content: flex-end;
+  a {
+    margin-left: 2rem;
+    display: inline;
+    color: rgba(255, 75, 168, 1);
+    color: rgba(254, 103, 58, 1);
+
+    text-decoration: underline;
+    /* text-decoration: none; */
+  }
+`
+
 export const StyledLink = styled.a`
-  color: ${props => props.theme.color};
   text-decoration: none;
   text-align: right;
-
-  :hover {
-    color: ${props => props.theme.backgroundColor};
-    background-color: ${props => props.theme.color};
-  }
-
-  :active {
-    color: ${props => props.theme.backgroundColor};
-    background-color: ${props => props.theme.color};
-  }
 `
