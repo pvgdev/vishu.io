@@ -33,18 +33,26 @@ const GlobalStyle = createGlobalStyle`
 
   .content {
     grid-area: content;
-    /* > div > * {
+    > div > * {
       margin: 2rem 1.5rem;
     }
     > div > pre {
       margin: 1rem 0px;
-    } */
+    }
+		> div > div {
+			margin: 0px;
+		}
   }
 
 .sk-cube-grid {
 	width: 40px;
 	height: 40px;
 	margin: 100px auto;
+	position: absolute;
+	top: 40%;
+	left: 0;
+	right: 0;
+	text-align: center;
 }
 
 .sk-cube-grid .sk-cube {

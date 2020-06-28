@@ -39,8 +39,8 @@ export const Container = styled.div`
       [nav-end content-end];
     grid-template-rows:
       4rem
-      [nav-start] 5rem
-      [nav-end] 1rem
+      [nav-start] auto
+      [nav-end] 3rem
       [content-start] 1fr
       [content-end];
   }

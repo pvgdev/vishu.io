@@ -1,0 +1,190 @@
+import {Img} from '@components'
+
+export const metadata = {
+  author: 'vishal',
+  date: '28 June, 2020',
+  tags: ['javascript', 'typescript'],
+  title: `JavaScript & TypeScript classes- Part 1 - Access Modifiers`,
+  description: `People familiar with OOP languages like C++, Java and Python have
+  been trying to implement OOP patterns in Javascript from a long time. Since ES6, 
+  classes were introduced to make it easier to implement such patterns.`,
+  urlPath: '/notes/javascript/class-access-modifiers'
+}
+
+If you haven't read my article on `this` and prototype chain I suggest you to read
+them before following along this post.
+
+Suggested Reads: 
+
+1. [Why do we need to bind 'this' in React class constructor? - Part 1](https://vishu.io/notes/react/this-binding).
+2. [Understanding prototype chain in JavaScript](https://vishu.io/notes/javascript/prototype-chain)
+3. [Understanding 'prototype' property on every function](https://vishu.io/notes/javascript/what-is-prototype)
+
+### Class is just a function internally
+
+Classes in Javascript use `Prototype chain` internally to provide a OOP like syntax.
+For example consider a simple class in Typescript and transpile it into ES5 syntax.
+
+```ts 
+class Animal {
+    
+}
+```
+is similar to 
+
+```js 
+"use strict";
+var Animal = /** @class */ (function () {
+    function Animal() {
+    }
+    return Animal;
+}());
+```
+
+Which shows that a class is nothing but a function.
+
+> A class is just a function in javascript
+
+***
+
+### Typescript provides `public`, `private` and `protected` access modifiers
+
+
+Typescript provides access modifiers like public, private and protected just like
+Java and C++. It also provides a constructor where you could define the functions 
+signature and initialize the objects value. 
+
+***
+
+**Public:** 
+   
+1. If no access modifier is specified Typescript or Javascript will assume that 
+   it is a `public` field.
+2. We can also mention that a member is public with `public` keyword explicitly.
+3. `public` fields can be accessed from outside the class definition.
+
+```ts
+class MyClass {
+    public myPublicVariable = 0;
+}
+
+var obj = new MyClass();
+obj.myPublicVariable = 1;
+console.log(obj.myPublicVariable); // Outputs : 1
+```
+
+As we can see, I updated the value of obj.myPublicVariable to 1 from outside the 
+class declaration and it worked fine. Now let's see the transpiled results
+
+```ts
+"use strict";
+var MyClass = /** @class */ (function () {
+    function MyClass() {
+        this.myPublicVariable = 0;
+    }
+    return MyClass;
+}());
+var obj = new MyClass();
+obj.myPublicVariable = 1;
+console.log(obj.myPublicVariable);
+```
+
+So `public` members are added to each instance of the object created of the `constructor call`.
+That means that each object get's different memory space for `myPublicVariable` 
+and that is the reason we can mutate it from the outside.
+
+***
+
+**Private:**
+
+1. Any member with `#` prefix in it's identifier name is a private variable. 
+2. We can also use `private` keyword to declare private members.
+3. Private members are not accessible from outside.
+
+Private members in Typescript
+```ts 
+class MyClass {
+    private myPrivateVariable = 0;
+}
+
+var obj = new MyClass();
+
+// Throws error
+// Property 'myPrivateVariable' is private and only accessible within class 'MyClass'.
+obj.myPrivateVariable; 
+```
+The above code will throw an error during compilation with Typescript because you
+cannot access `myPrivateVariable` from outside the class declaration. Let's looks 
+at the transpiled code.
+
+```js
+"use strict";
+var MyClass = /** @class */ (function () {
+    function MyClass() {
+        this.myPrivateVariable = 0;
+    }
+    return MyClass;
+}());
+var obj = new MyClass();
+obj.myPrivateVariable;
+```
+Hmm... Even though the compiler threw an error the compilation went fine. This is
+because typescript always emits output and the type checking is only done at compilation
+time. If you get any errors you have to fix them before pushing the code to production.
+
+But there is something else that we must notice here, the `myPrivateVariable` is 
+still created on every object exactly like the myPublicVariable. So typescript can
+only alert you about type errors at compilation time. If you ignore those errors 
+and push them to production you could definitely access myPrivateVariable with no issues.
+Here the `private` modifier is just `compilate time` restriction.
+
+**Runtime private members with Javascript**
+
+Javascript has introduced private fields for classes which can be used without
+typescript.
+
+```js
+class MyClass {
+  #myPrivateVariable = 0;
+}
+
+var obj = new MyClass();
+obj.myPrivateVariable;
+```
+Here we prefix the `#` sign to the identifier to denote that the member is private.
+And it will throw an error during runtime.
+
+> Note: Right now most browsers support this feature. 
+
+***
+
+**Protected:**
+
+Unlike public fields, `protected` fields can only be accessible by the child classes.
+
+```ts
+class Animal {
+  protected name = 0;
+}
+
+class Dog extends Animal {
+  private breed: string
+  constructor(name: string, breed: string) {
+    super(name);
+    this.breed = breed;
+  } 
+
+  printDog() {
+    console.log(`The dog name is ${this.name} and it's breed is ${this.breed}`)
+  }
+}
+
+var dog = new Dog('Scooby doo', 'Great Dane');
+
+// Outputs: The dog name is Scooby doo and it's breed is Great Dane 
+dog.printDog();
+```
+
+Here even though the field is defined in parent class `Animal` the child class access
+it with the this method. Again this is just for compile time validation with Typescript.
+At runtime Javascript doesn't detect this violation.

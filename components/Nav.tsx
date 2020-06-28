@@ -32,7 +32,11 @@ Nav.MenuRight = () => {
 Nav.MenuRight.displayName = 'Nav.MenuRight'
 
 Nav.MenuLeft = () => {
-  return <MenuLeft>&lt;vishu /&gt;</MenuLeft>
+  return (
+    <MenuLeft>
+      <div>&lt;vishu /&gt;</div>
+    </MenuLeft>
+  )
 }
 
 Nav.MenuLeft.displayName = 'Nav.MenuLeft'
