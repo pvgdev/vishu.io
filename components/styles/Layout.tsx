@@ -38,8 +38,8 @@ export const Container = styled.div`
       [nav-start content-start] auto
       [nav-end content-end];
     grid-template-rows:
-      2rem
-      [nav-start] 3rem
+      4rem
+      [nav-start] 5rem
       [nav-end] 1rem
       [content-start] 1fr
       [content-end];

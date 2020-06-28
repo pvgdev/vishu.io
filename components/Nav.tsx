@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Link from 'next/link'
 import React from 'react'
 
@@ -15,6 +18,7 @@ export const Nav: React.FC & INav = ({children}) => {
 Nav.MenuRight = () => {
   return (
     <MenuRight>
+      <i className="bx bxs-sun"></i>
       <Link href="/" passHref>
         <StyledLink>Home</StyledLink>
       </Link>

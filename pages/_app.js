@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
 .sk-cube-grid .sk-cube {
 	width: 33%;
 	height: 33%;
-	background-color: #333;
+	background-color: ${props => props.theme.color};
 	float: left;
 	-webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
 	animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
@@ -133,8 +133,7 @@ function MyApp({Component, pageProps}) {
   return (
     <>
       <ThemeProvider theme={light}>
-        <GlobalStyle theme={light} />
-
+        <GlobalStyle />
         <Component {...pageProps}> </Component>
         <Footer></Footer>
       </ThemeProvider>

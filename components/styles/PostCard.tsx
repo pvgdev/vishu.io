@@ -41,13 +41,13 @@ export const ReadMore = styled.div`
   justify-content: flex-end;
 
   a {
-    border: 1px solid black;
+    border: ${props => `1px solid ${props.theme.color}`};
     padding: 5px 1rem;
     display: inline;
     /* background-color: rgba(255, 75, 168, 1);
     background-color: rgba(254, 103, 58, 1); */
     /* margin: 3rem 0; */
-    color: black;
+    color: ${props => props.theme.color};
     text-decoration: none;
   }
 `

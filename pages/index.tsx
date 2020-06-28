@@ -65,8 +65,6 @@ export const getStaticProps: GetStaticProps = async () => {
     for await (const f of getFiles(rootDir)) {
       const relativePath = relative(rootDir, f)
       const {metadata} = await import('../content/' + relativePath)
-      metadata.urlPath = '/notes' + metadata.urlPath
-      // console.log(metadata.urlPath)
       meta.push(metadata)
     }
     return meta

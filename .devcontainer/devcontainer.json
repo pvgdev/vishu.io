@@ -48,7 +48,8 @@
     "naumovs.color-highlight",
     "sdras.night-owl",
     "silvenon.mdx",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "coenraads.bracket-pair-colorizer-2"
   ]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -108,11 +108,6 @@ export const Layout: React.FC<Props> = ({
           content="width=device-width, user-scalable=no"
         ></meta>
       </Head>
-      {/* <Avatar></Avatar>
-      <Description>
-        <Description.Title>Vishal Goud</Description.Title>
-        <Description.Caption>Full Stack Developer</Description.Caption>
-      </Description> */}
       <Nav>
         <Nav.MenuLeft></Nav.MenuLeft>
         <Nav.MenuRight></Nav.MenuRight>

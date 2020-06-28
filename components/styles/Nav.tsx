@@ -19,6 +19,11 @@ export const MenuRight = styled.nav`
   display: flex;
   flex: 2;
   justify-content: flex-end;
+
+  i {
+    font-size: 2rem;
+  }
+
   a {
     margin-left: 2rem;
     display: inline;
