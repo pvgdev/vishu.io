@@ -22,9 +22,9 @@ Nav.MenuRight = () => {
       <Link href="/" passHref>
         <StyledLink>Home</StyledLink>
       </Link>
-      <Link href="/skills" passHref>
+      {/* <Link href="/skills" passHref>
         <StyledLink>Skills</StyledLink>
-      </Link>
+      </Link> */}
     </MenuRight>
   )
 }

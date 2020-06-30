@@ -46,9 +46,9 @@ export const NavBar: React.FC & INavBar = ({children}) => {
         <Link href="/" passHref>
           <StyledLink onClick={() => setIsMenuOpened(false)}>Home</StyledLink>
         </Link>
-        <Link href="/skills" passHref>
+        {/* <Link href="/skills" passHref>
           <StyledLink onClick={() => setIsMenuOpened(false)}>Skills</StyledLink>
-        </Link>
+        </Link> */}
       </DropDown>
     </Container>
   )
