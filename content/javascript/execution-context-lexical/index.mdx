@@ -1,0 +1,253 @@
+import {Img} from "@components"
+
+export const metadata = {
+  author: 'vishal',
+  date: '26 June, 2020',
+  tags: ['javascript'],
+  title: `Execution context and lexical environments`,
+  description: `Let's explore how javascript execution contexts and lexical environments
+  are stored in memory`,
+  urlPath: '/notes/javascript/execution-context-lexical'
+}
+
+In this post we will try to understand how javascript `execution context` differs
+from regular call stack in languages like C, C++, Java and C#. We will also explore
+the concepts of `lexical environments` which allow javascript to treat functions 
+as first class citizens and thereby allowing JS developers to use some of the `functional
+programming` constructs even though javascript lacks support for immutability.
+
+Before doing that we need to answer few questions regarding how browser executes 
+javascript.
+
+### From where does the JS engine in browser start it's execution?
+
+When the browser loads a web page it will look for `<script>` tags and load each
+script asynchronously or synchronously depending on the situation. After loading
+the scripts JS engine will immediately start parsing the `scripts`.
+
+If there is more than one `<script>` being loaded it will just concatenate all the
+script files into a single script.
+
+```html
+<script type="text/javascript" src="a.js"></script>
+<script type="text/javascript" src="b.js"></script>
+<script type="text/javascript" src="c.js"></script>
+```
+
+Here the script `a.js`, `b.js` and `c.js` will be concatenated into a single script and
+the JS engine will treat the concatenated script like a single script file. For the 
+purpose of this post I will consider that concatenated script to be `mainScript.js`.
+
+### The call stack, execution context and `mainScript.js` 
+
+Call stack is implemented with a stack like structure which grows and shrinks during
+the execution of the program. Each frame in this call stack is called `execution context`.
+Initially the call stack starts with concatenated `mainScript.js` and over the time
+`execution contexts` are pushed and popped from the call stack.
+
+When the JS engine first start it's execution it will place `mainScript.js` on to 
+the call stack and whenever we call a function it places a new execution context on
+to the call stack. For example if you had the following program:
+
+```
+<script>
+function foo() {
+  console.log("foo has been called");
+  bar();
+}
+
+function bar() {
+  console.log("bar has been called");
+}
+
+foo();
+</script>
+```
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/callstack.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/callstack.png')} type="image/jpeg" />
+    <img src={require('./images/callstack.png')} />
+  </picture>
+</Img>
+
+> Call stack grows and shrinks throughout the execution of the program. Each frame 
+of the call stack is called `execution context`.
+
+### Hoisting, Lexical environments and scope chains 
+
+In languages like C, C++, Java and C# the local variables of a function are stored
+on the call stack itself. In javascript the local variables are stored in the heap
+in a `tree` like structure.
+
+The JS engine compilation typically takes two passes. 
+
+1. **Hoisting:** JS engine parses the source code and performs tokenizing, lexing and 
+   builds the parse trees. During this process it builds a lexical environment which 
+   is similar to `symbol table` in other programming languages. A `lexical environment`
+   is usually represented using a `scope object` which is just a mapping for local variables 
+   and it's values. When these `scope` objects are connected it forms a `scope chain`. 
+2. **Execution:** During the execution phase the JS engine starts executing the code line 
+   by line. While executing the values of variables in lexical environment are initialized 
+   and updated according to program logic. 
+
+
+For example, consider the following code.
+
+```js
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+console.log(add5(2));  // 7
+console.log(add5(3));  // 8
+console.log(add10(2)); // 12
+```
+
+JS engine will look for all the `var` and `function` declarations and add them to
+the active `lexical environment`. Since at the beginning of the program there is no 
+active lexical scope JS engine will treat `global` object as scope and
+add scope objects whenever a function is invoked.
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Execution1.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Execution1.png')} type="image/png" />
+    <img src={require('./images/Execution1.png')} />
+  </picture>
+</Img>
+
+1. The `global` object is stored somewhere on the heap memory while the execution stack
+is stored on the stack memory. 
+2. The variable `add5` and `add10` will be undefined since the execution hasn't yet begun. 
+3. JS engine creates a function object on the heap memory and points it's internal 
+**[[Scope]]** property to `global` object which is the active lexical environment when `makeAdder` is declared.
+
+### Let's analyze how scopes are represented in memory step by step.
+
+1.**`makeAdder(5)` invocation:** 
+  - `makeAdder(5)` call is placed onto the call stack.
+  - A new scope object is created for `makeAdder(5)` called `makeAdder(5) Scope`.
+  - Since `makeAdder` has it's internal [[Scope]] property pointing towards `global object`,
+  `makeAdder(5) Scope` will hold a **outer** reference towards `global object`.
+  - Since we have one parameter `x` create a variable `x` on that scope object and 
+  set it's value to `undefined`.
+  - Since `makeAdder` function returns an nameless function and anonymous function 
+  is created on the heap memory with empty name("") 
+  - This anonymous functions has it's internal [[Scope]] property stores a reference
+  towards `makeAdder(5) Scope` because that is the active scope where the anonymous 
+  function is declared.
+  - Begin the execution of the function and set `x` value to `5`.
+  - Return the reference to the anonymous function.
+
+2.**`makeAdder(5)` function call exits:**
+  - The returned reference to anonymous function is stored in `add5` variable.
+  - Garbage collector cannot remove the scope object `makeAdder(5) Scope` since 
+  anonymous function has internal `[[Scope]]` property referencing the `makeAdder(5)
+  Scope` object.
+  - `makeAdder(5)` is popped from the call stack.
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Execution1.5.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Execution1.5.png')} type="image/png" />
+    <img src={require('./images/Execution1.5.png')} />
+  </picture>
+</Img>
+
+3.**`add5(2)` invocation:**
+  - JS engine will create a scope object `add5(2) Scope`.
+  - Since we have one parameter `y` create a variable `y` and set it's value to 
+  `undefined`.
+  - `add5` is referencing the anonymous function and it has it's internal `[[Scope]]`
+  property referencing the `makeAdder(5) Scope` object. `add5(2) Scope` will have 
+  an **outer** referencing the `makeAdder(5) Scope`.
+  - Execution phase begins. `y` value is updated to given argument value `2`.
+  - We need to return `x + y` but there is no `x` variable in `add5(2) Scope` so 
+  we will follow the scope chain using the **outer** reference and reach `makeAdder(5) Scope`.
+  - There is a `x` variable on `makeAdder(5) Scope` so we calculate `x + y` and return
+  the result.
+  - We will pop the `add5(2)` function call from the call stack.
+  - `add5(2) Scope` object is unreachable and it is waiting for the garbage collector
+  to collect it.
+
+4.**`add5(2)` invocation:**
+  - JS engine will create a scope object `add5(3) Scope`.
+  - Since we have one parameter `y` create a variable `y` and set it's value to 
+  `undefined`.
+  - `add5` is referencing the anonymous function and it has it's internal `[[Scope]]`
+  property referencing the `makeAdder(5) Scope` object. `add5(3) Scope` will have 
+  an **outer** referencing the `makeAdder(5) Scope`.
+  - Execution phase begins. `y` value is updated to given argument value `3`.
+  - We need to return `x + y` but there is no `x` variable in `add5(2) Scope` so 
+  we will follow the scope chain using the **outer** reference and reach `makeAdder(5) Scope`.
+  - There is a `x` variable on `makeAdder(5) Scope` so we calculate `x + y` and return
+  the result.
+  - We will pop the `add5(3)` function call from the call stack.
+
+The snapshot of call stack and heap memory after add5(3) call invocation.
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Execution2.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Execution2.png')} type="image/png" />
+    <img src={require('./images/Execution2.png')} />
+  </picture>
+</Img>
+
+4.**`makeAdder(10)` invocation:** 
+  - `makeAdder(10)` call is placed onto the call stack.
+  - A new scope object is created for `makeAdder(10)` called `makeAdder(10) Scope`.
+  - Since `makeAdder` has it's internal [[Scope]] property pointing towards `global object`,
+  `makeAdder(10) Scope` will hold a **outer** reference towards `global object`.
+  - Since we have one parameter `x` create a variable `x` on that scope object and 
+  set it's value to `undefined`.
+  - Since `makeAdder` function returns an nameless function and anonymous function 
+  is created on the heap memory with empty name("") 
+  - This anonymous functions has it's internal [[Scope]] property stores a reference
+  towards `makeAdder(10) Scope` because that is the active scope where the anonymous 
+  function is declared.
+  - Begin the execution of the function and set `x` value to `10`.
+  - Return the reference to the anonymous function.
+
+5.**`makeAdder(10)` function call exits:**
+  - The returned reference to anonymous function is stored in `add10` variable.
+  - Garbage collector cannot remove the scope object `makeAdder(10) Scope` since 
+  anonymous function has internal `[[Scope]]` property referencing the `makeAdder(10)
+  Scope` object.
+  - `makeAdder(10)` is popped from the call stack.
+
+6.**`add10(2)` invocation:**
+  - JS engine will create a scope object `add10(2) Scope`.
+  - Since we have one parameter `y` create a variable `y` and set it's value to 
+  `undefined`.
+  - `add10` is referencing the anonymous function and it has it's internal `[[Scope]]`
+  property referencing the `makeAdder(10) Scope` object. `add10(2) Scope` will have 
+  an **outer** referencing the `makeAdder(10) Scope`.
+  - Execution phase begins. `y` value is updated to given argument value `2`.
+  - We need to return `x + y` but there is no `x` variable in `add10(2) Scope` so 
+  we will follow the scope chain using the **outer** reference and reach `makeAdder(10) Scope`.
+  - There is a `x` variable on `makeAdder(10) Scope` so we calculate `x + y` and return
+  the result.
+  - We will pop the `add10(2)` function call from the call stack.
+  - `add10(2) Scope` object is unreachable and it is waiting for the garbage collector
+  to collect it.
+
+The snapshot of call stack and heap memory after add10(2) call invocation.
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Execution3.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Execution3.png')} type="image/png" />
+    <img src={require('./images/Execution3.png')} />
+  </picture>
+</Img>
+
+Finally the call stack will become empty and the `mainScript.js` will pop out.
+Now JS engine will be listening for events and execute them on asynchronously. 

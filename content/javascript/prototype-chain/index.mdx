@@ -1,4 +1,5 @@
-import {Img} from '@components'
+import MyImage from "./images/a_prototype.png";
+import {Img} from "@components"
 
 export const metadata = {
   author: 'vishal',
@@ -25,10 +26,6 @@ The following is the mapping of primitive types to existing objects.
 If you try to check the properties on `Number.prototype` in developer tools you 
 will find the following output
 
-<Img>
-  <img src={require('./images/number_prototype.png')} />
-</Img>
-
 Declare a variable `a` and check the properties on it's internal `[[Prototype]]`
 property. But how do we do that? We can't access `[[Prototype]]` and we are not 
 supposed to that according the language spec. Oddly, some browser expose access 
@@ -47,8 +44,12 @@ console.log(a.__proto__)
 will output 
 
 <Img>
-  <img src={require('./images/a_prototype.png')} />
+  <picture>
+    <source srcSet={require('./images/a_prototype.png?webp')} type="image/webp" />
+    <img src={require('./images/a_prototype.png')} />
+  </picture>
 </Img>
+
 
 **Wait**, doesn't that look familiar? Both `a.__proto__` looks the same as `Number.prototype`
 
@@ -64,9 +65,7 @@ console.log(a.__proto__ === Number.prototype)
 ```
 
 Outputs:
-<Img>
-  <img src={require('./images/a_eq_Number.png')} />
-</Img>
+
 
 > So `a.__proto__` and Number.prototype point to the same thing in memory. There is 
 no copying being done. 

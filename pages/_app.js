@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import './styles.css'
 
-import {Footer} from '@components'
 import React from 'react'
 import {createGlobalStyle, ThemeProvider} from 'styled-components'
 
@@ -40,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
       margin: 1rem 0px;
     }
 		> div > div {
+			margin: 0px;
+		}
+
+		svg > div {
 			margin: 0px;
 		}
   }
@@ -143,7 +146,6 @@ function MyApp({Component, pageProps}) {
       <ThemeProvider theme={light}>
         <GlobalStyle />
         <Component {...pageProps}> </Component>
-        <Footer></Footer>
       </ThemeProvider>
     </>
   )

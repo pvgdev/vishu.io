@@ -32,9 +32,9 @@ const components = {
     text-decoration: line-through;
   `,
   inlineCode: styled.span`
-    background-color: rgba(255, 250, 224, 1);
+    background-color: rgba(250, 250, 250);
+    color: rgba(255, 75, 168, 1);
     font-weight: bold;
-    padding: 0 0.5rem;
   `,
   em: styled.b``,
   h1: styled.h1`
@@ -53,6 +53,10 @@ const components = {
   hr: styled.hr``,
   ol: styled.ol`
     padding-left: 4rem;
+    > ul {
+      margin: 0px;
+      padding-left: 0rem;
+    }
   `,
   p: styled.p`
     margin: 1rem 0;
@@ -103,10 +107,7 @@ export const Layout: React.FC<Props> = ({
     <Container>
       <Head>
         <title>{title}</title>
-        <meta
-          name="viewport"
-          content="width=device-width, user-scalable=no"
-        ></meta>
+        <meta name="viewport" content="width=device-width"></meta>
       </Head>
       <Nav>
         <Nav.MenuLeft></Nav.MenuLeft>
