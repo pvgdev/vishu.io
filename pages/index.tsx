@@ -26,7 +26,11 @@ export const index: React.FC<Props> = ({posts}) => {
           <PostCard key={post.urlPath}>
             <PostCard.Tags tags={post.tags}></PostCard.Tags>
             <PostCard.Date>{post.date}</PostCard.Date>
-            <PostCard.Title>{post.title}</PostCard.Title>
+            <PostCard.Title>
+              <Link href={post.urlPath} passHref>
+                <a>{post.title}</a>
+              </Link>
+            </PostCard.Title>
             <PostCard.Description>{post.description}</PostCard.Description>
             <PostCard.ReadMore>
               <Link href={post.urlPath} passHref>

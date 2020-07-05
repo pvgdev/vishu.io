@@ -1,247 +1,183 @@
+import {CounterNoThis} from './CounterNoThis'
+import {Counter} from './Counter'
+
 export const metadata = {
   author: 'vishal',
   date: '26 June, 2020',
   tags: ['react', 'javascript'],
-  title: `Why do we need to bind 'this' in React class constructor? - Part 1`,
-  description: `Understanding what 'this' means in javascript and why we should bind functions to objects.`,
+  title: `Why do we need to bind 'this' in React class constructor?`,
+  description: `Having learnt how call, apply and bind work in the previous post
+  we will finally answer why "this" must be bound to the class instance`,
   urlPath: '/notes/react/this-binding'
 }
 
-In JavaScript there is keyword called `this` and what it represents changes with 
-the context in which we are using it. This is the reason `this` is often said to
-be the one of the most confusing things in JavaScript.
+Suggested Reading: [Javascript this and dynamic context](https://vishu.io/notes/javascript/this-binding)
 
-### So what exactly is `this`?
+### There is no need to bind `this` to class instance if you're aren't using `this` in the event handlers.
 
-Press the key combo `Ctrl + Shift + I` which will open your browser developer tools. Go to the console tab and type `this`
-and press `RETURN` key. This will return the `Window` object.
+Let's consider the following `<CounterNoThis />` component where the `increment` 
+and `decrement` functions don't use `this.setState()` keyword in them and just uses a basic 
+alert to show a message. 
 
-```
-Window {parent: Window, opener: null, top: Window, length: 0, frames: Window, …}
-```
+> Note: Make sure you aren't blocking alerts on this website.
 
-So by default `this` points to `Window` object in the browser. But in Nodejs the
-global object isn't `Window` and node has different global object per module. 
+```tsx
+// CounterNoThis.tsx
+import React from 'react'
+import styled from 'styled-components'
 
-> `this` always points to the `global` object when your Javascript run time cannot
-figure out the context. What that `global` means changes with the environment you're in.
-
-### In strict mode `this` value is `undefined` and doesn't point to `global`.
-
-In your developer tools if you type the following it will print out `undefined`.
-
-```
-function printThis(){
-  'use strict';
-  console.log(this);
+interface State {
+  count: number
 }
 
-printThis();
-```
+export class CounterNoThis extends React.Component<unknown, State> {
+  constructor(props: null) {
+    super(props)
+    this.state = {count: 0}
+  }
 
-This is the default behavior in strict mode and modern Javascript modules use `strict`
-mode by default.
+  increment() {
+    alert('"+" button is clicked')
+  }
 
-> In `strict` mode `this` value is undefined by when JavaScript cannot figure out
-the context.
+  decrement() {
+    alert('"-" button is clicked')
+  }
 
-In browser wrap your code in an IIFE to emulate `module` behavior and `'use strict';`
-for that entire module.
-
-```
-(function IIFE(){
-  "use strict";
-
-  /*
-  * Rest of you code
-  *
-  */
-})();
-```
-
-### `this` value can change depending on the context you use it.
-
-For example add the `printThis` function we created earlier can be added as a property
-on a object and be invoked on it. Like this
-
-```
-function printThis(){
-  'use strict';
-  return this;
+  render() {
+    return (
+      <Container>
+        <H2>Counter</H2>
+        <Button onClick={this.decrement}>-</Button>
+        <StyledSpan aria-label="counter">{this.state.count}</StyledSpan>
+        <Button onClick={this.increment}>+</Button>
+      </Container>
+    )
+  }
 }
 
-var obj = {};
-obj.printThis = printThis;
+const Container = styled.div`
+  text-align: center;
+  border: 1px solid gray;
+  padding: 1rem;
+`
 
-var thisInsideTheFunction = obj.printThis();
+const H2 = styled.h2``
 
-console.log(thisInsideTheFunction === obj)
+const Button = styled.button`
+  padding: 0 1rem;
+  border: 1px solid black;
+`
+
+const StyledSpan = styled.span`
+  padding: 0 2rem;
+`
 ```
 
-will output `true`. Which means that `this` value inside the function is the same 
-as the object on which it is called. 
 
-> Every time you call a function on a object like `someObj.someFunc()` that call 
-to `someFunc` uses someObj as the context.
+<CounterNoThis />
 
+**Notice that we aren't updating the state i.e, the counter stays at 0. Also, check how we did not `bind` event handlers in this case?**
 
-### Change `this` context to some other object at call time
-
-Whenever you're calling a function you can change the context `this` points to for that 
-particular call. This can be done using either `call` or `apply` functions.
-
-Consider the following function
-
-```
-(function(){
-  'use strict'
-  function printAccountDetails(printPretty = false) {
-    if(printPretty) {
-      console.log(JSON.stringify(this, null, 2));
-    } else {
-      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
-    }
-  }
-  
-  printAccountDetails();
-})();
-```
-
-`printAccountDetails(printPretty = false)` mean when given no argument `printPretty`
-defaults to false.
-
-When you make a call `printAccountDetails()` it will output 
-
-```
-VM240:7 Uncaught TypeError: Cannot read property 'accNo' of undefined
-    at printAccountDetails (<anonymous>:7:44)
-    at <anonymous>:11:3
-    at <anonymous>:12:3
-```
-
-which means the value of this is undefined. 
-
-```
-(function(){
-  'use strict'
-  function printAccountDetails(printPretty = false) {
-    if(printPretty) {
-      console.log(JSON.stringify(this, null, 2));
-    } else {
-      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
-    }
-  }
-  
-  printAccountDetails(true);
-})();
-```
-
-Call `printAccountDetails(true)` just prints `undefined` to the console because 
-`JSON.stringify` returns `undefined` when called with `(this, null, 2)` because 
-`this` is undefined.
-
-### Use of `call` function
-
-We can create an object and use that as `this` context with the `call` function
-
-```
-(function(){
-  'use strict'
-
-  var account = {
-    accNo: 1234,
-    accName: 'vishal'
-  }
-
-  function printAccountDetails(printPretty = false) {
-    if(printPretty) {
-      console.log(JSON.stringify(this, null, 2));
-    } else {
-      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
-    }
-  }
-  
-  // "call" with "account" object
-  printAccountDetails.call(account);
-
-  // "call" with "account" object and pass parameter `true` to prettyPrint
-  printAccountDetails.call(account, true);
-})();
-```
-
-The call `printAccountDetails.call(account);` outputs 
-
-```
-Account number:1234 Account name: vishal
-```
-
-and we can pass parameters as comma separated values like this
-`printAccountDetails.call(account, true);`. Which outputs
-
-```json
-{
-  "accNo": 1234,
-  "accName": "vishal"
+```ts
+constructor(props: null) {
+  super(props)
+  this.state = {count: 0}
 }
 ```
 
-### Use of `apply` function.
+> When you don't use `this` in your event handlers there is no need to bind that
+function to the `class instance`.
 
-`apply` is the same as call but we pass parameters as an array. For example, 
-`printAccountDetails.call(account, true);` is the same as `printAccountDetails.apply(account, [true]);`
 
-```
-(function(){
-  'use strict'
+***
 
-  var account = {
-    accNo: 1234,
-    accName: 'vishal'
+
+### If you use `this.setState` or reference `this` in any way `this` needs to bound to the class instance in the constructor.
+
+ES6 classes use `strict` mode so `this` will always fallback to `undefined` when no context is provided.
+
+In the [building &lt;Counter /&gt; component tutorial](https://vishu.io/notes/react/counter-tutorial)
+we saw that `increment` and `decrement` are used to update the state of the component. Let's not bind
+the event handlers to class instance yet like in the following code and examine what happens when
+we click buttons.
+
+```tsx
+// Counter.tsx
+import React from 'react'
+import styled from 'styled-components'
+
+interface State {
+  count: number
+}
+
+export class Counter extends React.Component<unknown, State> {
+  constructor(props: null) {
+    super(props)
+    this.state = {count: 0}
   }
 
-  function printAccountDetails(printPretty = false) {
-    if(printPretty) {
-      console.log(JSON.stringify(this, null, 2));
-    } else {
-      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
-    }
-  }
-  
-  // "apply" with "account" object
-  printAccountDetails.apply(account);
-
-  // "apply" with "account" object and pass parameter `true` to prettyPrint
-  printAccountDetails.apply(account, [true]);
-})();
-```
-
-### `bind` `this` in a function permanently to an object permanently until it we manually re`bind` it to another object.
-
-When you `bind` a function to an object it will remember the context unless you rebind it to another object with the `bind` call again.
-
-```
-(function(){
-  'use strict'
-
-  var account = {
-    accNo: 1234,
-    accName: 'vishal'
+  increment() {
+    this.setState(prevState => ({count: prevState.count + 1}))
   }
 
-  function printAccountDetails(printPretty = false) {
-    if(printPretty) {
-      console.log(JSON.stringify(this, null, 2));
-    } else {
-      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
-    }
+  decrement() {
+    this.setState(prevState => ({count: prevState.count - 1}))
   }
-  
-  // "bind" printAccountDetails to "account" object
-  var bindedPrintAccountDetails = printAccountDetails.bind(account);
 
-  // Call the bounded functions like a normal function and it will remember the 
-  // the context of `this` until it is rebound.
-  bindedPrintAccountDetails();
-  bindedPrintAccountDetails(true);
-})();
+  render() {
+    return (
+      <Container>
+        <H2>Counter</H2>
+        <Button onClick={this.decrement}>-</Button>
+        <StyledSpan aria-label="counter">{this.state.count}</StyledSpan>
+        <Button onClick={this.increment}>+</Button>
+      </Container>
+    )
+  }
+}
+
+const Container = styled.div`
+  text-align: center;
+  border: 1px solid gray;
+  padding: 1rem;
+`
+
+const H2 = styled.h2``
+
+const Button = styled.button`
+  padding: 0 1rem;
+  border: 1px solid black;
+`
+
+const StyledSpan = styled.span`
+  padding: 0 2rem;
+`
 ```
+
+It will print errors to `console` every time you click the button.
+
+```
+TypeError: Cannot read property 'setState' of undefined
+```
+
+The error simply means that it was not able to find `setState` function on `this`
+because `this` isn't bound to anything right now.
+
+We can force `this` to be bound to the class instance(React component) inside class constructor like this: 
+
+```tsx
+constructor(props: null) {
+    super(props)
+    this.state = {count: 0}
+    this.increment = this.increment.bind(this)
+    this.decrement = this.decrement.bind(this)
+}
+```
+
+<Counter />
+
+Now everything works as expected.
+
+> Bind the event handlers in the constructor only if you're using this in the said
+handler.

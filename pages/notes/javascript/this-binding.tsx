@@ -1,5 +1,5 @@
 import {Layout} from '@components'
-import MDXDocument, {metadata} from '@content/react/this-binding/1/index.mdx'
+import MDXDocument, {metadata} from '@content/javascript/this-binding/index.mdx'
 import React from 'react'
 
 const {title, description, date} = metadata

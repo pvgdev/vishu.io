@@ -19,11 +19,10 @@ export const Tag = styled.span<TagProps>`
   padding: 2px 4px;
   font-family: courier-prime, monospace;
   color: ${props => (props.color ? props.color : 'white')};
-  /* background-color: ${props => (props.bgColor ? props.bgColor : 'white')}; */
-  /* border: 1px solid ${props => props.theme.color}; */
+  background-color: ${props => (props.bgColor ? props.bgColor : 'white')};
+  border: 1px solid ${props => props.theme.color};
   margin: 3rem 0;
   margin-right: 1rem;
-  color: ${props => props.theme.color};
   border: ${props => `1px solid ${props.theme.color}`};
 `
 
@@ -33,6 +32,14 @@ export const Date = styled.div`
 
 export const Title = styled.h3`
   font-family: merriweather, serif;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+  }
 `
 
 export const Description = styled.p``

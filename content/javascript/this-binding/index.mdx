@@ -1,0 +1,247 @@
+export const metadata = {
+  author: 'vishal',
+  date: '26 June, 2020',
+  tags: ['react', 'javascript'],
+  title: `Javascript this and dynamic context`,
+  description: `Understanding what 'this' means in javascript and why we should bind functions to objects.`,
+  urlPath: '/notes/javascript/this-binding'
+}
+
+In JavaScript there is keyword called `this` and what it represents changes with 
+the context in which we are using it. This is the reason `this` is often said to
+be the one of the most confusing things in JavaScript.
+
+### So what exactly is `this`?
+
+Press the key combo `Ctrl + Shift + I` which will open your browser developer tools. Go to the console tab and type `this`
+and press `RETURN` key. This will return the `Window` object.
+
+```
+Window {parent: Window, opener: null, top: Window, length: 0, frames: Window, …}
+```
+
+So by default `this` points to `Window` object in the browser. But in Nodejs the
+global object isn't `Window` and node has different global object per module. 
+
+> `this` always points to the `global` object when your Javascript run time cannot
+figure out the context. What that `global` means changes with the environment you're in.
+
+### In strict mode `this` value is `undefined` and doesn't point to `global`.
+
+In your developer tools if you type the following it will print out `undefined`.
+
+```
+function printThis(){
+  'use strict';
+  console.log(this);
+}
+
+printThis();
+```
+
+This is the default behavior in strict mode and modern Javascript modules use `strict`
+mode by default.
+
+> In `strict` mode `this` value is undefined by when JavaScript cannot figure out
+the context.
+
+In browser wrap your code in an IIFE to emulate `module` behavior and `'use strict';`
+for that entire module.
+
+```
+(function IIFE(){
+  "use strict";
+
+  /*
+  * Rest of you code
+  *
+  */
+})();
+```
+
+### `this` value can change depending on the context you use it.
+
+For example add the `printThis` function we created earlier can be added as a property
+on a object and be invoked on it. Like this
+
+```
+function printThis(){
+  'use strict';
+  return this;
+}
+
+var obj = {};
+obj.printThis = printThis;
+
+var thisInsideTheFunction = obj.printThis();
+
+console.log(thisInsideTheFunction === obj)
+```
+
+will output `true`. Which means that `this` value inside the function is the same 
+as the object on which it is called. 
+
+> Every time you call a function on a object like `someObj.someFunc()` that call 
+to `someFunc` uses someObj as the context.
+
+
+### Change `this` context to some other object at call time
+
+Whenever you're calling a function you can change the context `this` points to for that 
+particular call. This can be done using either `call` or `apply` functions.
+
+Consider the following function
+
+```
+(function(){
+  'use strict'
+  function printAccountDetails(printPretty = false) {
+    if(printPretty) {
+      console.log(JSON.stringify(this, null, 2));
+    } else {
+      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
+    }
+  }
+  
+  printAccountDetails();
+})();
+```
+
+`printAccountDetails(printPretty = false)` mean when given no argument `printPretty`
+defaults to false.
+
+When you make a call `printAccountDetails()` it will output 
+
+```
+VM240:7 Uncaught TypeError: Cannot read property 'accNo' of undefined
+    at printAccountDetails (<anonymous>:7:44)
+    at <anonymous>:11:3
+    at <anonymous>:12:3
+```
+
+which means the value of this is undefined. 
+
+```
+(function(){
+  'use strict'
+  function printAccountDetails(printPretty = false) {
+    if(printPretty) {
+      console.log(JSON.stringify(this, null, 2));
+    } else {
+      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
+    }
+  }
+  
+  printAccountDetails(true);
+})();
+```
+
+Call `printAccountDetails(true)` just prints `undefined` to the console because 
+`JSON.stringify` returns `undefined` when called with `(this, null, 2)` because 
+`this` is undefined.
+
+### Use of `call` function
+
+We can create an object and use that as `this` context with the `call` function
+
+```
+(function(){
+  'use strict'
+
+  var account = {
+    accNo: 1234,
+    accName: 'vishal'
+  }
+
+  function printAccountDetails(printPretty = false) {
+    if(printPretty) {
+      console.log(JSON.stringify(this, null, 2));
+    } else {
+      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
+    }
+  }
+  
+  // "call" with "account" object
+  printAccountDetails.call(account);
+
+  // "call" with "account" object and pass parameter `true` to prettyPrint
+  printAccountDetails.call(account, true);
+})();
+```
+
+The call `printAccountDetails.call(account);` outputs 
+
+```
+Account number:1234 Account name: vishal
+```
+
+and we can pass parameters as comma separated values like this
+`printAccountDetails.call(account, true);`. Which outputs
+
+```json
+{
+  "accNo": 1234,
+  "accName": "vishal"
+}
+```
+
+### Use of `apply` function.
+
+`apply` is the same as call but we pass parameters as an array. For example, 
+`printAccountDetails.call(account, true);` is the same as `printAccountDetails.apply(account, [true]);`
+
+```
+(function(){
+  'use strict'
+
+  var account = {
+    accNo: 1234,
+    accName: 'vishal'
+  }
+
+  function printAccountDetails(printPretty = false) {
+    if(printPretty) {
+      console.log(JSON.stringify(this, null, 2));
+    } else {
+      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
+    }
+  }
+  
+  // "apply" with "account" object
+  printAccountDetails.apply(account);
+
+  // "apply" with "account" object and pass parameter `true` to prettyPrint
+  printAccountDetails.apply(account, [true]);
+})();
+```
+
+### `bind` `this` in a function permanently to an object permanently until it we manually re`bind` it to another object.
+
+When you `bind` a function to an object it will remember the context unless you rebind it to another object with the `bind` call again.
+
+```
+(function(){
+  'use strict'
+
+  var account = {
+    accNo: 1234,
+    accName: 'vishal'
+  }
+
+  function printAccountDetails(printPretty = false) {
+    if(printPretty) {
+      console.log(JSON.stringify(this, null, 2));
+    } else {
+      console.log("Account number:" + this.accNo + " Account name: " + this.accName)
+    }
+  }
+  
+  // "bind" printAccountDetails to "account" object
+  var bindedPrintAccountDetails = printAccountDetails.bind(account);
+
+  // Call the bounded functions like a normal function and it will remember the 
+  // the context of `this` until it is rebound.
+  bindedPrintAccountDetails();
+  bindedPrintAccountDetails(true);
+})();
+```
