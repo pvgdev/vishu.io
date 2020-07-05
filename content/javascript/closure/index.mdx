@@ -10,4 +10,54 @@ export const metadata = {
   urlPath: '/notes/javascript/closure'
 }
 
-Suggested reading: 
+Suggested reading: [Execution context and lexical environments](https://vishu.io/notes/javascript/execution-context-lexical)
+
+
+### What is a closure? 
+
+A quick search on MDN will lead to the following definition.
+
+> A closure is the combination of a function bundled together (enclosed) with 
+references to its surrounding state (the lexical environment). In other words, 
+a closure gives you access to an outer function’s scope from an inner function. 
+In JavaScript, closures are created every time a function is created, at function 
+creation time.
+
+Wait those are too many words and I'm confused. We have already read about **Execution
+context** and **lexical environments** in the previous post. Which makes it a lot 
+easier to break down these concepts. In fact, we probably already know what is a closure.
+
+```js
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+console.log(add5(2));  // 7
+console.log(add5(3));  // 8
+console.log(add10(2)); // 12
+```
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Closure.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Closure.png')} type="image/jpeg" />
+    <img src={require('./images/Closure.png')} />
+  </picture>
+</Img>
+
+In the above function `makeAdder(5)` lexical environment should have been garbage
+collected in any other language as soon as makeAdder(5) call is returned. But in 
+JavaScript the scope object isn't garbage collected. The reason here is that `add5`
+holds a reference to anonymous function which in turn holds reference to `makeAdder(5) Scope`
+object preventing it from getting garbage collected.
+
+So technically, we can say `anonymous function` has a closure over `makeAdder(5) Scope` 
+and the inner function can reach the outer functions scope through scope chain. 
+
+> This is exactly what **closure** is and it allows inner function access the lexical
+environment of outer function.  

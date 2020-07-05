@@ -31,7 +31,7 @@ export const Container = styled.div`
     [navbar-start] 5rem
     [navbar-end] 1rem
     [content-start] 1fr
-    [content-end];
+    [content-end] 5rem;
 
   @media only screen and (min-width: 600px) {
     grid-template-columns:
@@ -42,6 +42,6 @@ export const Container = styled.div`
       [nav-start] auto
       [nav-end] 3rem
       [content-start] 1fr
-      [content-end];
+      [content-end] 5rem;
   }
 `

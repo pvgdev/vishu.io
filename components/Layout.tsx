@@ -32,7 +32,7 @@ const components = {
     text-decoration: line-through;
   `,
   inlineCode: styled.span`
-    background-color: rgba(250, 250, 250);
+    background-color: rgba(243, 243, 230, 1);
     color: rgba(255, 75, 168, 1);
     font-weight: bold;
   `,
