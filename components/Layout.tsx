@@ -32,9 +32,10 @@ const components = {
     text-decoration: line-through;
   `,
   inlineCode: styled.span`
-    background-color: rgba(243, 243, 230, 1);
-    color: rgba(255, 75, 168, 1);
-    font-weight: bold;
+    background-color: rgba(208, 208, 213, 1);
+    /* color: rgba(255, 75, 168, 1); */
+    color: rgba(10, 10, 49, 1);
+    /* font-weight: bold; */
   `,
   em: styled.b``,
   h1: styled.h1`
@@ -52,7 +53,7 @@ const components = {
   li: styled.li``,
   hr: styled.hr``,
   ol: styled.ol`
-    padding-left: 4rem;
+    padding-left: 2rem;
     > ul {
       margin: 0px;
       padding-left: 0rem;

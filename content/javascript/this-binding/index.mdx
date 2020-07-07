@@ -7,24 +7,24 @@ export const metadata = {
   urlPath: '/notes/javascript/this-binding'
 }
 
-In JavaScript there is keyword called `this` and what it represents changes with 
-the context in which we are using it. This is the reason `this` is often said to
-be the one of the most confusing things in JavaScript.
+In JavaScript there is a keyword called `this` and what it represents changes with 
+the context in which we are using it. Which makes `this` one of the most confusing
+things for a new person learning JavaScript.
 
 ### So what exactly is `this`?
 
-Press the key combo `Ctrl + Shift + I` which will open your browser developer tools. Go to the console tab and type `this`
-and press `RETURN` key. This will return the `Window` object.
+If you type `this` or `globalThis` in the console of your browser dev tools, it will
+return the `window` object.
 
 ```
 Window {parent: Window, opener: null, top: Window, length: 0, frames: Window, …}
 ```
 
-So by default `this` points to `Window` object in the browser. But in Nodejs the
-global object isn't `Window` and node has different global object per module. 
+`window` is the global object in browsers. In Node.js environments there is an
+explicit `global` object. No matter what the global object is named `this` will 
+always default to that object. 
 
-> `this` always points to the `global` object when your Javascript run time cannot
-figure out the context. What that `global` means changes with the environment you're in.
+> Irrespective of the environment you're in you can access global with `globalThis`
 
 ### In strict mode `this` value is `undefined` and doesn't point to `global`.
 
@@ -38,15 +38,8 @@ function printThis(){
 
 printThis();
 ```
-
-This is the default behavior in strict mode and modern Javascript modules use `strict`
-mode by default.
-
-> In `strict` mode `this` value is undefined by when JavaScript cannot figure out
-the context.
-
-In browser wrap your code in an IIFE to emulate `module` behavior and `'use strict';`
-for that entire module.
+Use IIFE to emulate `module` behavior and `'use strict';` for that entire module.
+Now whatever code is in the IIFE's body will run in `strict` mode.
 
 ```
 (function IIFE(){
@@ -61,8 +54,9 @@ for that entire module.
 
 ### `this` value can change depending on the context you use it.
 
-For example add the `printThis` function we created earlier can be added as a property
-on a object and be invoked on it. Like this
+You can implicitly change the value of `this` to some object by invoking the function 
+as `someObj.someFunc()`. Here `someFunc` will change it's this value to `someObj` for
+that one specific call.
 
 ```
 function printThis(){
@@ -84,11 +78,13 @@ as the object on which it is called.
 > Every time you call a function on a object like `someObj.someFunc()` that call 
 to `someFunc` uses someObj as the context.
 
-
 ### Change `this` context to some other object at call time
 
-Whenever you're calling a function you can change the context `this` points to for that 
-particular call. This can be done using either `call` or `apply` functions.
+You can change `this` value explicitly in three ways.
+
+1. `call` function
+2. `apply` function
+3. `bind` function
 
 Consider the following function
 
@@ -140,7 +136,10 @@ Call `printAccountDetails(true)` just prints `undefined` to the console because
 `JSON.stringify` returns `undefined` when called with `(this, null, 2)` because 
 `this` is undefined.
 
-### Use of `call` function
+When you're calling a function you can change the context `this` points to for that 
+particular call. This can be done using either `call` or `apply` functions.
+
+### 1. Use of `call` function
 
 We can create an object and use that as `this` context with the `call` function
 
@@ -185,7 +184,7 @@ and we can pass parameters as comma separated values like this
 }
 ```
 
-### Use of `apply` function.
+### 2. Use of `apply` function.
 
 `apply` is the same as call but we pass parameters as an array. For example, 
 `printAccountDetails.call(account, true);` is the same as `printAccountDetails.apply(account, [true]);`
@@ -215,7 +214,9 @@ and we can pass parameters as comma separated values like this
 })();
 ```
 
-### `bind` `this` in a function permanently to an object permanently until it we manually re`bind` it to another object.
+### 3. `bind` function
+
+`bind` `this` in a function permanently to an object permanently until it we manually re`bind` it to another object.
 
 When you `bind` a function to an object it will remember the context unless you rebind it to another object with the `bind` call again.
 

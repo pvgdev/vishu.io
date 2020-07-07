@@ -33,7 +33,7 @@ export const Date = styled.div`
 export const Title = styled.h3`
   font-family: merriweather, serif;
   a {
-    color: black;
+    color: ${props => props.theme.color};
     text-decoration: none;
   }
   a:hover {
