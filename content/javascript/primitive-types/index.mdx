@@ -81,6 +81,14 @@ javascript converts it into a wrapper object. The wrapper object is basically an
 instance of a Primitive function and will have access to all the properties
 on it's prototype.
 
+The following is the mapping of primitive types to existing objects.
+
+| Primitive Type     | Prototype linked to|
+| ------------- |:-------------:| 
+| 10| Number.prototype |
+| "Hello, world"| String.prototype |
+| true or false | Boolean.prototype |
+
 For example, 
 
 1. `10.999` will be coerced to `Number` instance. So it can access `Number.prototype` 

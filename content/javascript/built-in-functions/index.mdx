@@ -1,0 +1,89 @@
+import {Img} from "@components"
+
+export const metadata = {
+  author: 'vishal',
+  date: '7 July, 2020',
+  tags: ['javascript'],
+  title: `Built-in functions, wrapper objects and prototype chains`,
+  description: `Javascript has some built in functions which are native and their
+  behavior is defined by the ECMAScript spec`,
+  urlPath: '/notes/javascript/built-in-functions'
+}
+
+ECMAScript spec makes it clear that the following functions should be provided by
+the JS engine by default. Their behavior is also described in detail by the standards
+committee and every JS engine should adhere to those rules.
+
+The following are some of the native functions available in Javascript:
+
+1. Object
+2. Function
+3. Boolean
+4. Symbol
+5. Number
+6. BigInt
+7. Math
+8. Date
+9. Array
+10. Promise 
+
+**And many more...**
+
+### Every object in Javascript is an instance of `Object` function
+
+Every object is an instance of Object and it's 
+internal property [[Prototype]] is linked to `Object.prototype`. 
+
+```js 
+var obj = {
+  a: 10,
+  b: 'hello',
+  c: function() {
+    console.log("This is a function!");
+  }
+}
+
+console.log(obj instanceof Object); // true
+console.log(obj.__proto__ === Object.prototype) // true
+```
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Object.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Object.png')} type="image/png" />
+    <img src={require('./images/Object.png')}  />
+  </picture>
+</Img>
+
+
+The above diagram illustrates how things are in computer's memory. Object `obj`
+is defined in the global scope and obj has it's internal property [[Prototype]] 
+linked to `Object.Prototype`. So `obj` has access to all the properties of 
+`Object.Prototype` through prototype chain.
+
+### Every function in Javascript is an instance of `Function` function
+
+Similar to an objects every function is an instance of `Function` function and
+every function has it's access to properties on `Function.prototype` through 
+prototype chain.
+
+<Img>
+  <picture>
+    <source srcSet={require('./images/Function.png?webp')} type="image/webp" />
+    <source srcSet={require('./images/Function.png')} type="image/png" />
+    <img src={require('./images/Function.png')}  />
+  </picture>
+</Img>
+
+### Prototype chain
+
+If a property is not found on an object, JS runtime will check if it has an internal
+[[Prototype]] property. If it does exist, JS runtime will check for the property
+on the object [[Prototype]] points to.
+
+This process of following through the internal [[Prototype]] property is called 
+prototype chain.
+
+Eventually all objects will reach Object.prototype in it's prototype chain and if 
+the property doesn't exist on `Object.prototype` the prototype chain will end there
+because `Object.Prototype.[[Prototype]]` is `null`. 
